@@ -1,0 +1,110 @@
+
+Avatar
+
+Overview[anchor]
+
+An Etsy member's avatar image.
+
+Supported Sizes[anchor]
+
+The ListingImage resource includes fields for the following sizes, which be officially supported by Etsy at least through the end of 2013:
+
+   Size                   Where We Use It
+75x75       small thumbnail
+170x135     homepage, treasuries, shop listings
+570xN       listing page
+fullxfull   listing page zoom
+
+Additional sizes are available but do not have specific fields in the resource. Instead, treat the full size URL as a template. Use the ImageType methods to retrieve available sizes for listing images; any of these can be subsituted in place of "fullxfull" in the full size URL to make a new URL for the listing image of that size.
+
+The 570xN and fullxfull image sizes have variable dimensions depending on the original artwork uploaded by the seller:
+
+  • For the 570xN size, the horizontal dimension will be the original artwork's horizontal size, or 570 pixels, whichever is smaller. Likewise for all other *xN images
+  • For the fullxfull size, the horizontal dimension will be the original artwork's horizontal size, or 1500 pixels, whichever is smaller.
+  • These sizes will have a variable vertical dimension, dependent on the original artwork's aspect ratio.
+
+Resizing, Cropping and Caching Images[anchor]
+
+If the provided sizes don't suit your application, you are free to download the larger image sizes, resize and cache them for your own use, as long as you adhere to our API Terms of Use.
+
+Uploading Images[anchor]
+
+Image uploads can be performed using a POST request with the Content-Type: multipart/form-dataheader, following RFC1867. This is identical to using curl -F, except that that request needs to be signed using OAuth.
+
+Your OAuth toolkit must support multipart form uploads as described above. Here is example code for PHP using the PECL OAuth 1.1 extension (PECL OAuth 1.0 will not work):
+
+// You must define the constants OAUTH_CONSUMER_KEY and OAUTH_CONSUMER_SECRET
+// You must also assign values to the variables $access_token, $access_token_secret,
+// $listing_id and $filename, and $mimetype.
+// Your image file is assumed to be in the same directory as this code.
+
+$oauth = new OAuth(OAUTH_CONSUMER_KEY, OAUTH_CONSUMER_SECRET);
+
+$oauth->enableDebug();
+$oauth->setToken($access_token, $access_token_secret);
+
+try {
+    $source_file = dirname(realpath(__FILE__)) ."/$filename";
+
+    $url = "http://openapi.etsy.com/v2/listings/".$listing_id."/images";
+    $params = array('@image' => '@'.$source_file.';type='.$mimetype);
+
+    $oauth->fetch($url, $params, OAUTH_HTTP_METHOD_POST);
+
+    $json = $oauth->getLastResponse();
+    print_r(json_decode($json, true));
+
+} catch (OAuthException $e) {
+    // You may want to recover gracefully here...
+    print $oauth->getLastResponse()."\n";
+    print_r($oauth->debugInfo);
+    die($e->getMessage());
+}
+
+Fields[anchor]
+
+       Field        Visibility Level  Permission Scope    Type                                Description
+avatar_id           public            none              int      The numeric ID for this avatar image.
+hex_code            public            none              string   The avatar' average RGB color, in webhex notation.
+red                 public            none              int      The avatar's average red channel (RGB color) value from 0-255.
+green               public            none              int      The avatar's average green channel (RGB color) value from 0-255.
+blue                public            none              int      The avatar's average blue channel (RGB color) value from 0-255.
+hue                 public            none              int      The avatar's average hue (HSV color) from 0-360.
+saturation          public            none              int      The avatar's average saturation (HSV color) from 0-100.
+brightness          public            none              int      The avatar's average brightness (HSV color) from 0-100.
+is_black_and_white  public            none              boolean  True if the avatar is a black and white image.
+creation_tsz        public            none              float    The time that the avatar was uploaded.
+user_id             public            none              int      The numeric ID of the user who owns the avatar.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+uploadAvatar[anchor]
+
+    Method Name     uploadAvatar
+     Synopsis       Upload a new user avatar image
+    HTTP Method     POST
+        URI         /users/:user_id/avatar
+                      Name    Required  Default         Type
+                    src      N                   string
+    Parameters      user_id  Y                   user_id_or_name
+                    image    N                   image
+
+  Requires OAuth    Y
+ Permission Scope   profile_w
+
+getAvatarImgSrc[anchor]
+
+    Method Name     getAvatarImgSrc
+     Synopsis       Get avatar image source
+    HTTP Method     GET
+        URI         /users/:user_id/avatar/src
+                      Name    Required  Default         Type
+    Parameters      user_id  Y                   user_id_or_name
+
+  Requires OAuth    N
+ Permission Scope   none
+

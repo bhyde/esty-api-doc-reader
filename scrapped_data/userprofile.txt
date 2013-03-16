@@ -1,0 +1,84 @@
+
+UserProfile
+
+Overview[anchor]
+
+Represents a user's public profile. Generally, this is the information available for a member as "Public Profile" on Etsy.com
+
+Deprecated Fields[anchor]
+
+As of March 28, 2011, the "User" and "Shops" associations of UserProfile no longer exist in the API. Instead, query the User resource directly, using the Etsy member's login name, and/or use the Shops association of User.
+
+Fields[anchor]
+
+         Field           Visibility Level  Permission Scope   Type                                Description
+user_profile_id          public            none              int     The numeric ID of the user profile.
+                                                                     DEPRECATED: Do not use
+user_id                  public            none              int     The numeric ID of the user this profile corresponds to.
+login_name               public            none              string  The login name of the user that owns this profile.
+bio                      public            none              string  The bio of the user.
+gender                   public            none              string  The gender of the user.
+birth_month              public            none              string  The birth month of the user.
+birth_day                public            none              string  The birth day of the user.
+birth_year               private           profile_r         string  The birth year of the user.
+join_tsz                 public            none              float   The date and time the user was created, in epoch seconds.
+materials                public            none              string  A list of the user's favorite materials.
+country_id               public            none              int     The numeric ID of the user's country.
+region                   public            none              string  The user's region (free-form text)
+city                     public            none              string  The user's city (free-form text)
+location                 public            none              string  [DEPRECATED] The user's location (self-supplied, free-form text).
+avatar_id                public            none              int     The numeric ID of this user's avatar image.
+lat                      private           profile_r         float   The latitude of the user.
+lon                      private           profile_r         float   The longitude of the user.
+transaction_buy_count    public            none              int     The number of bought items for this user.
+transaction_sold_count   public            none              int     The number of sold transactions for this user.
+is_seller                public            none              boolean If the user is a seller or not. Value true if user is a seller.
+image_url_75x75          public            none              string  The URL to the user's avatar image; dimensions 75px square.
+first_name               public            none              string  The first name of the user.
+last_name                public            none              string  The last name of the user.
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope    Type                 Description
+Country      public             none               Country  The country in which the user lives.
+
+Methods[anchor]
+
+findUserProfile[anchor]
+
+   Method Name     findUserProfile
+     Synopsis      Returns the UserProfile object associated with a User.
+   HTTP Method     GET
+       URI         /users/:user_id/profile
+                      Name       Required      Default            Type
+    Parameters     user_id     Y                         user_id_or_name
+
+  Requires OAuth   N
+ Permission Scope  none
+
+updateUserProfile[anchor]
+
+   Method Name    updateUserProfile
+                  Updates the UserProfile object associated with a User.
+                  Notes:
+    Synopsis
+                    • Name changes are subject to admin review and therefore unavailable via the API.
+                    • Materials must be provided as a period-separated list of ASCII words.
+
+   HTTP Method    PUT
+       URI        /users/:user_id/profile
+                            Name               Required          Default                   Type
+                  user_id                  Y                                 user_id_or_name
+                  bio                      N                                 string
+                  gender                   N                                 string
+                  birth_month              N                                 int
+   Parameters     birth_day                N                                 int
+                  birth_year               N                                 int
+                  materials                N                                 string
+                  country_id               N                                 string
+                  region                   N                                 string
+                  city                     N                                 string
+
+ Requires OAuth   Y
+Permission Scope  profile_w
+

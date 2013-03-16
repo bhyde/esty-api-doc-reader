@@ -1,0 +1,139 @@
+
+GuestCart
+
+Overview[anchor]
+
+Represents a guest shopping cart on Etsy. Users have one cart per shop.
+
+This is a cart that is not yet associated to a single user, but to a guest ID for tracking purposes. Some important things to note about Guest Carts:
+
+  • Each GuestID generated is associated only with the application that generated it. You may not access a guest's carts from multiple different applications.
+  • Although Guest Carts do not require an authenticated user, they do require your app to have production access in order to be interacted with. Please use the sandbox to test your app and apply for production access when you've got an application ready for public use.
+  • Guest Carts expire after 30 days of inactivity. Do not rely on a guest cart existing permanently, as they will be emptied and reset after those 30 days.
+
+Fields[anchor]
+
+          Field            Visibility Level  Permission Scope         Type                                     Description
+cart_id                    public            none              int                 The numeric ID of the cart
+shop_name                  public            none              string              The shop name
+message_to_seller          public            none              string              The message to the seller
+destination_country_id     public            none              int                 The numeric ID of the destination country
+coupon_code                public            none              string              The alphanumeric coupon code applied to the cart
+currency_code              public            none              string              The ISO (alphabetic) code for the currency
+total                      public            none              string              The total price
+subtotal                   public            none              string              The subtotal price
+shipping_cost              public            none              string              The shipping cost
+tax_cost                   public            none              string              The tax cost
+discount_amount            public            none              string              The line-item discount amount (does not include tax or shipping)
+shipping_discount_amount   public            none              string              The shipping discount amount
+tax_discount_amount        public            none              string              The tax discount amount
+url                        public            none              string              The full URL to the cart page on Etsy
+listings                   public            none              array(CartListing)  An array of purchase information for the listings
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope       Type                  Description
+Shop         public             none               Shop            The shop
+Listings     public             none               array(Listing)  An array of listings
+Coupon       public             none               Coupon          The coupon applied to the cart
+
+Methods[anchor]
+
+findAllGuestCarts[anchor]
+
+    Method Name     findAllGuestCarts
+     Synopsis       Get all guest's carts
+    HTTP Method     GET
+        URI         /guests/:guest_id/carts
+                       Name     Required  Default     Type
+    Parameters      guest_id   Y                   guest_id
+
+  Requires OAuth    N
+ Permission Scope   none
+
+addToGuestCart[anchor]
+
+    Method Name     addToGuestCart
+     Synopsis       Add a listing to guest's cart
+    HTTP Method     POST
+        URI         /guests/:guest_id/carts
+                             Name          Required  Default       Type
+                    guest_id               Y                  guest_id
+    Parameters      listing_id             Y                  int
+                    quantity               N         1        int
+                    selected_variations    N                  map(int,int)
+
+  Requires OAuth    N
+ Permission Scope   none
+
+updateGuestCartListingQuantity[anchor]
+
+   Method Name     updateGuestCartListingQuantity
+     Synopsis      Update a guest's cart listing purchase quantity
+   HTTP Method     PUT
+       URI         /guests/:guest_id/carts
+                               Name             Required  Default    Type
+                   guest_id                     Y                  guest_id
+    Parameters     listing_id                   Y                  int
+                   quantity                     Y                  int
+                   listing_customization_id     N         0        int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+removeGuestCartListing[anchor]
+
+   Method Name     removeGuestCartListing
+     Synopsis      Remove a listing from a guest's cart
+   HTTP Method     DELETE
+       URI         /guests/:guest_id/carts
+                               Name             Required  Default    Type
+                   guest_id                     Y                  guest_id
+    Parameters     listing_id                   Y                  int
+                   listing_customization_id     N         0        int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findGuestCart[anchor]
+
+    Method Name     findGuestCart
+     Synopsis       Get a guest's cart
+    HTTP Method     GET
+        URI         /guests/:guest_id/carts/:cart_id
+                       Name     Required  Default     Type
+    Parameters      guest_id   Y                   guest_id
+                    cart_id    Y                   cart_id
+
+  Requires OAuth    N
+ Permission Scope   none
+
+updateGuestCart[anchor]
+
+    Method Name     updateGuestCart
+     Synopsis       Update a guest's cart
+    HTTP Method     PUT
+        URI         /guests/:guest_id/carts/:cart_id
+                               Name            Required  Default    Type
+                    guest_id                   Y                  guest_id
+                    cart_id                    Y                  cart_id
+    Parameters      destination_country_id     N                  int
+                    message_to_seller          N                  string
+                    coupon_code                N                  string
+
+  Requires OAuth    N
+ Permission Scope   none
+
+deleteGuestCart[anchor]
+
+    Method Name     deleteGuestCart
+     Synopsis       Delete a guest's cart
+    HTTP Method     DELETE
+        URI         /guests/:guest_id/carts/:cart_id
+                       Name     Required  Default     Type
+    Parameters      guest_id   Y                   guest_id
+                    cart_id    Y                   cart_id
+
+  Requires OAuth    N
+ Permission Scope   none
+

@@ -1,0 +1,46 @@
+
+Country
+
+Overview[anchor]
+
+Represents a geographical country and its location.
+
+Fields[anchor]
+
+          Field           Visibility Level  Permission Scope   Type                                        Description
+country_id                public            none              int    The country's numeric ID.
+iso_country_code          public            none              string The two-letter country code according to ISO 3166-1-alpha-2.
+world_bank_country_code   public            none              string The three-letter country code according to the World Bank.
+name                      public            none              string The country's plain-English name.
+slug                      public            none              string The country's plain-English name slugified; suitable for interpolation into a url.
+lat                       public            none              float  The country's latitude.
+lon                       public            none              float  The country's longitude.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllCountry[anchor]
+
+     Method Name      findAllCountry
+      Synopsis        Finds all Country.
+     HTTP Method      GET
+         URI          /countries
+     Parameters       none
+   Requires OAuth     N
+  Permission Scope    none
+
+getCountry[anchor]
+
+    Method Name     getCountry
+     Synopsis       Retrieves a Country by id.
+    HTTP Method     GET
+        URI         /countries/:country_id
+                        Name      Required  Default      Type
+    Parameters      country_id   Y                   array(int)
+
+  Requires OAuth    N
+ Permission Scope   none
+

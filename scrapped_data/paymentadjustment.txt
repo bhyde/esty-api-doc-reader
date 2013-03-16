@@ -1,0 +1,54 @@
+
+PaymentAdjustment
+
+Overview[anchor]
+
+Represents refund on a Direct Checkout Payment. Please note all monetary amounts are in USD pennies unless otherwise specified.
+
+Fields[anchor]
+
+            Field             Visibility Level  Permission Scope   Type                                         Description
+payment_adjustment_id         private           transactions_r    int    The payment adjustment's numeric ID.
+payment_id                    private           transactions_r    int    The payment's numeric ID.
+status                        private           transactions_r    string The status of the Payment Adjustment. Can be OPEN, REFUNDED, ERROR, or REFUND_FAILED.
+user_id                       private           transactions_r    int    The seller's numeric ID.
+reason_code                   private           transactions_r    string A human-readable string describing the need for the refund.
+total_adjustment_amount       private           transactions_r    int    The total amount of the refund.
+total_fee_adjustment_amount   private           transactions_r    int    The amount of card processing fees associated with this adjustment.
+create_date                   private           transactions_r    int    The date and time the payment adjustment was created in Epoch seconds.
+update_date                   private           transactions_r    int    The date and time the payment adjustment was last updated in Epoch seconds.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findPaymentAdjustments[anchor]
+
+    Method Name     findPaymentAdjustments
+     Synopsis       Get a Payment Adjustments from a Payment Id
+    HTTP Method     GET
+        URI         /payments/:payment_id/adjustments
+                          Name         Required      Default    Type
+                    payment_id       Y                         int
+    Parameters      limit            N             25          int
+                    offset           N             0           int
+                    page             N                         int
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+
+findPaymentAdjustment[anchor]
+
+   Method Name     findPaymentAdjustment
+     Synopsis      Get a Direct Checkout Payment Adjustment
+   HTTP Method     GET
+       URI         /payments/:payment_id/adjustments/:payment_adjustment_id
+                                 Name                 Required     Default    Type
+    Parameters     payment_id                       Y                        int
+                   payment_adjustment_id            Y                        int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+

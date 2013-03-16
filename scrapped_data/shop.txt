@@ -1,0 +1,152 @@
+
+Shop
+
+Overview[anchor]
+
+Represents a shop with listings for sale.  Each shop is owned by one user.
+
+Fields[anchor]
+
+         Field           Visibility Level  Permission Scope       Type                                                 Description
+shop_id                  public            none              int            The shop's numeric ID.
+shop_name                public            none              string         The shop's name.
+first_line               private           shops_rw          string         The first line of the shops address. DEPRECATED: use UserAddress.first_line instead.
+second_line              private           shops_rw          string         The second line of the shops address. DEPRECATED: use UserAddress.second_line instead.
+city                     private           shops_rw          string         The city the shop is in. DEPRECATED: use UserAddress.city instead.
+state                    private           shops_rw          string         The state the shop is in. DEPRECATED: use UserAddress.state instead.
+zip                      private           shops_rw          string         The zip code the shop is in. DEPRECATED: use UserAddress.zip instead.
+country_id               private           shops_rw          int            The numeric ID of the country the shop is in. DEPRECATED: use UserAddress.country_id instead.
+user_id                  public            none              int            The numeric ID of the user that owns this shop.
+creation_tsz             public            none              float          The date and time the shop was created, in epoch seconds.
+title                    public            none              string         A brief heading for the shop's main page.
+announcement             public            none              string         An announcement to buyers that displays on the shop's homepage.
+currency_code            public            none              string         The ISO code (alphabetic) for the seller's native currency.
+is_vacation              public            none              boolean        If the seller is not currently accepting purchases, 1, blank otherwise.
+vacation_message         public            none              string         If is_vacation=1, a message to buyers.
+sale_message             public            none              string         A message that is sent to users who buy from this shop.
+last_updated_tsz         public            none              float          The date and time the shop was last updated, in epoch seconds.
+listing_active_count     public            none              int            The number of active listings in the shop.
+login_name               public            none              string         The user's login name.
+lat                      private           shops_rw          float          The latitude of the shop.
+lon                      private           shops_rw          float          The longitude of the shop.
+accepts_custom_requests  public            none              boolean        True if the shop accepts requests for custom items.
+policy_welcome           public            none              string         The introductory text from the top of the seller's policies page (may be blank).
+policy_payment           public            none              string         The seller's policy on payment (may be blank).
+policy_shipping          public            none              string         The seller's policy on shipping (may be blank).
+policy_refunds           public            none              string         The seller's policy on refunds (may be blank).
+policy_additional        public            none              string         Any additional policy information the seller provides (may be blank).
+policy_seller_info       public            none              string         The shop's seller information (may be blank).
+policy_updated_tsz       public            none              float          The date and time the shop was last updated, in epoch seconds.
+vacation_autoreply       public            none              string         If is_vacation=1, a message to buyers in response to new convos.
+ga_code                  private           shops_rw          string         The shop's Google Analytics code.
+name                     private           shops_rw          string         The shop owner's real name. DEPRECATED: use UserAddress.name instead.
+url                      public            none              string         The URL of the shop
+image_url_760x100        public            none              string         The URL to the shop's banner image.
+num_favorers             public            none              int            The number of members who've marked this Shop as a favorite
+has_tax_preferences      public            none              boolean        True if this shop has any tax rate preferences set.
+languages                public            none              array(string)  The languages that this Shop is enrolled in.
+
+Associations[anchor]
+
+ Association  Visibility Level  Permission Scope           Type                                                        Description
+User          public            none              User                    The user who owns this shop.
+About         public            none              ShopAbout               Detailed data about this shop.
+Sections      public            none              array(ShopSection)      An array of sections within the shop.  Each section holds listings.
+Listings      public            none              array(Listing)          An array of listings within the shop.  (Must be used with scope "active", e.g.: Listings:active).
+Receipts      private           shops_rw          array(Receipt)          An array of receipts (one per buyer) for this shop.
+Transactions  private           shops_rw          array(Transaction)      An array of transactions (sold items) for this shop.
+Translations  public            none              array(ShopTranslation)  An array of translations for this Shop.
+
+Methods[anchor]
+
+findAllShops[anchor]
+
+   Method Name    findAllShops
+    Synopsis      Finds all Shops. If there is a keywords parameter, finds shops with shop_name starting with keywords.
+   HTTP Method    GET
+       URI        /shops
+                                 Name                         Required                Default                   Type
+                  shop_name                           N                                              string
+                  limit                               N                        25                    int
+                  offset                              N                        0                     int
+   Parameters     page                                N                                              int
+                  lat                                 N                                              latitude
+                  lon                                 N                                              longitude
+                  distance_max                        N                        35                    float
+
+ Requires OAuth   N
+Permission Scope  none
+
+getShop[anchor]
+
+    Method Name     getShop
+     Synopsis       Retrieves a Shop by id.
+    HTTP Method     GET
+        URI         /shops/:shop_id
+                      Name   Required  Default             Type
+    Parameters      shop_id  Y                  array(shop_id_or_name)
+
+  Requires OAuth    N
+ Permission Scope   none
+
+updateShop[anchor]
+
+   Method Name     updateShop
+     Synopsis      Updates a Shop
+   HTTP Method     PUT
+       URI         /shops/:shop_id
+                           Name          Required  Default        Type
+                   shop_id               Y                  shop_id_or_name
+                   title                 N                  string
+                   announcement          N                  text
+                   sale_message          N                  text
+    Parameters     policy_welcome        N                  text
+                   policy_payment        N                  text
+                   policy_shipping       N                  text
+                   policy_refunds        N                  text
+                   policy_additional     N                  text
+                   policy_seller_info    N                  text
+
+  Requires OAuth   Y
+ Permission Scope  shops_rw
+
+uploadShopBanner[anchor]
+
+    Method Name     uploadShopBanner
+     Synopsis       Upload a new shop banner image
+    HTTP Method     POST
+        URI         /shops/:shop_id/appearance/banner
+                      Name    Required  Default         Type
+    Parameters      shop_id  Y                   shop_id_or_name
+                    image    Y                   imagefile
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+deleteShopBanner[anchor]
+
+    Method Name     deleteShopBanner
+     Synopsis       Deletes a shop banner image
+    HTTP Method     DELETE
+        URI         /shops/:shop_id/appearance/banner
+                      Name    Required  Default         Type
+    Parameters      shop_id  Y                   shop_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+findAllUserShops[anchor]
+
+   Method Name     findAllUserShops
+     Synopsis      Retrieves a set of Shop objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/shops
+                      Name       Required     Default            Type
+                   user_id     Y                        user_id_or_name
+    Parameters     limit       N            25          int
+                   offset      N            0           int
+                   page        N                        int
+
+  Requires OAuth   N
+ Permission Scope  none
+

@@ -1,0 +1,60 @@
+
+ForumPost
+
+Overview[anchor]
+
+A post from the forums.
+
+Fields[anchor]
+
+     Field       Visibility Level   Permission Scope   Type                Description
+thread_id       public             none               int    Unique identifier of the thread
+post_id         public             none               int    Id of the individual post
+post            public             none               string The content of the post
+user_id         public             none               string Id of the user who created the post
+last_edit_time  public             none               int    When the post was last edited
+create_date     public             none               int    When the post was created
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findTreasuryComments[anchor]
+
+    Method Name     findTreasuryComments
+     Synopsis       Get a Treasury's Comments
+    HTTP Method     GET
+        URI         /treasuries/:treasury_key/comments
+                         Name       Required  Default      Type
+                    treasury_key   Y                   treasury_id
+    Parameters      limit          N          25       int
+                    offset         N          0        int
+                    page           N                   int
+
+  Requires OAuth    N
+ Permission Scope   none
+
+postTreasuryComment[anchor]
+
+    Method Name     postTreasuryComment
+     Synopsis       Leave a comment on a Treasury List
+    HTTP Method     POST
+        URI         /treasuries/:treasury_key/comments
+                      Name     Required   Default      Type
+    Parameters      message   Y                    forum_post
+
+  Requires OAuth    Y
+ Permission Scope   treasury_w
+
+deleteTreasuryComment[anchor]
+
+    Method Name     deleteTreasuryComment
+     Synopsis       Delete a given comment on a Treasury List
+    HTTP Method     DELETE
+        URI         /treasuries/:treasury_key/comments/:comment_id
+    Parameters      none
+  Requires OAuth    Y
+ Permission Scope   treasury_w
+

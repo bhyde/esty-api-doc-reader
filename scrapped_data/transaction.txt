@@ -1,0 +1,101 @@
+
+Transaction
+
+Overview[anchor]
+
+Represents the sale of a single item.
+
+Fields[anchor]
+
+       Field        Visibility Level  Permission Scope                  Type                                                  Description
+transaction_id      public            none              int                                  The numeric ID for this transaction.
+title               public            none              string                               The title of the listing for this transaction.
+description         public            none              string                               The description of the listing for this transaction.
+seller_user_id      public            none              int                                  The numeric ID for the seller of this transaction.
+buyer_user_id       private           transactions_r    int                                  The numeric ID for the buyer of this transaction.
+creation_tsz        public            none              float                                The date and time the transaction was created, in epoch seconds.
+paid_tsz            private           transactions_r    float                                The date and time the transaction was paid, in epoch seconds.
+shipped_tsz         private           transactions_r    float                                The date and time the transaction was shipped, in epoch seconds.
+price               private           transactions_r    float                                The price of the transaction.
+currency_code       private           transactions_r    string                               The ISO code (alphabetic) for the seller's native currency.
+quantity            private           transactions_r    int                                  The quantity of items in this transaction.
+tags                public            none              array(string)                        The tags in the listing for this transaction.
+materials           public            none              array(string)                        The materials in the listing for this transaction.
+image_listing_id    public            none              int                                  The numeric ID of the primary listing image for this transaction.
+receipt_id          private           transactions_r    int                                  The numeric ID for the receipt associated to this transaction.
+shipping_cost       private           transactions_r    float                                The shipping cost for this transaction.
+listing_id          public            none              int                                  The numeric ID for this listing associated to this transaction.
+seller_feedback_id  public            none              int                                  The numeric ID of seller's feedback.
+buyer_feedback_id   public            none              int                                  The numeric ID for the buyer's feedback.
+transaction_type    private           transactions_r    string                               The type of transaction, usually "listing".
+url                 public            none              string                               URL of this transaction
+variations          public            none              array(Variations_SelectedProperty)   Purchased variations for this transaction. (NOTE: this is a beta feature.)
+
+Associations[anchor]
+
+Association  Visibility Level  Permission Scope      Type                             Description
+Buyer        private           transactions_r    User          The buyer that is associated with this transaction.
+MainImage    public            none              ListingImage  The primary listing image for this transaction.
+Listing      public            none              Listing       The listing that is associated with this transaction.
+Seller       public            none              User          The seller that is associated with this transaction.
+Receipt      private           transactions_r    Receipt       The receipt that is associated with this transaction.
+
+Methods[anchor]
+
+getTransaction[anchor]
+
+    Method Name     getTransaction
+     Synopsis       Retrieves a Transaction by id.
+    HTTP Method     GET
+        URI         /transactions/:transaction_id
+                          Name        Required  Default      Type
+    Parameters      transaction_id    Y                  array(int)
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+
+findAllReceiptTransactions[anchor]
+
+   Method Name     findAllReceiptTransactions
+     Synopsis      Retrieves a set of Transaction objects associated to a Receipt.
+   HTTP Method     GET
+       URI         /receipts/:receipt_id/transactions
+                            Name                Required           Default        Type
+                   receipt_id              Y                                    int
+    Parameters     limit                   N                   25               int
+                   offset                  N                   0                int
+                   page                    N                                    int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+
+findAllShopTransactions[anchor]
+
+   Method Name     findAllShopTransactions
+     Synopsis      Retrieves a set of Transaction objects associated to a Shop.
+   HTTP Method     GET
+       URI         /shops/:shop_id/transactions
+                       Name        Required      Default               Type
+                   shop_id      Y                           shop_id_or_name
+    Parameters     limit        N              25           int
+                   offset       N              0            int
+                   page         N                           int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+
+findAllUserBuyerTransactions[anchor]
+
+   Method Name     findAllUserBuyerTransactions
+     Synopsis      Retrieves a set of Transaction objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/transactions
+                       Name        Required      Default               Type
+                   user_id      Y                           user_id_or_name
+    Parameters     limit        N              25           int
+                   offset       N              0            int
+                   page         N                           int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+

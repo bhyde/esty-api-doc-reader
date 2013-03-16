@@ -1,0 +1,36 @@
+
+BillingOverview
+
+Overview[anchor]
+
+A user's account balance on Etsy.
+
+Fields[anchor]
+
+     Field       Visibility Level  Permission Scope    Type                                          Description
+is_overdue       private           billing_r         boolean  True if the user has an overdue balance.
+currency_code    private           billing_r         string   The currency unit in which the user is billed.
+overdue_balance  private           billing_r         float    The total overdue balance owed by the user.
+balance_due      private           billing_r         float    The total amount currently due for payment (including any overdue balance.)
+total_balance    private           billing_r         float    The total amount owed by the user (including fees that are not yet due for payment.)
+date_due         private           billing_r         epoch    The date by which the user's balance due must be paid.
+date_overdue     private           billing_r         epoch    The date on which the user's balance became overdue.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getUserBillingOverview[anchor]
+
+    Method Name     getUserBillingOverview
+     Synopsis       Retrieves the user's current balance.
+    HTTP Method     GET
+        URI         /users/:user_id/billing/overview
+                      Name    Required  Default         Type
+    Parameters      user_id  Y                   user_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   billing_r
+

@@ -1,0 +1,29 @@
+
+Style
+
+Overview[anchor]
+
+A user-supplied style attached to a listing. A user can either select from suggested styles, or create custom style.
+
+Fields[anchor]
+
+  Field    Visibility Level   Permission Scope   Type          Description
+style_id  public             none               int     Style ID for this style
+style     public             none               string  Style Name
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findSuggestedStyles[anchor]
+
+    Method Name      findSuggestedStyles
+      Synopsis       Retrieve all suggested styles.
+    HTTP Method      GET
+        URI          /taxonomy/styles
+     Parameters      none
+   Requires OAuth    N
+  Permission Scope   none
+

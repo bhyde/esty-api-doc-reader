@@ -1,0 +1,27 @@
+
+ShopAboutImage
+
+Overview[anchor]
+
+Data about a user's shop
+
+Fields[anchor]
+
+    Field      Visibility Level  Permission Scope   Type                                        Description
+shop_id        public            none              int    Numeric ID of the shop
+image_id       public            none              int    Numeric ID of the image record
+caption        public            none              string Description of this ShopAboutImage
+rank           public            none              int    The order of this image in a list
+url_178x178    public            none              string The url to a thumbnail of the image, exactly 178px by 178px.
+url_545xN      public            none              string The url to a thumbnail of the image, no more than 545px width by variable height.
+url_760xN      public            none              string The url to a thumbnail of the image, no more than 760px width by variable height.
+url_fullxfull  public            none              string The url to the full-size image, no more than 1500px width by variable height.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

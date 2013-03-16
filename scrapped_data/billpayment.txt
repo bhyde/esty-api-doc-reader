@@ -1,0 +1,44 @@
+
+BillPayment
+
+Overview[anchor]
+
+Represents a user's Billing Payment.
+
+Fields[anchor]
+
+     Field       Visibility Level  Permission Scope   Type                             Description
+bill_payment_id  private           billing_r         int     The numeric ID for this bill payment record.
+creation_tsz     private           billing_r         float   Creation time, in epoch seconds.
+type             private           billing_r         string  The name of the type of payment.
+type_id          private           billing_r         int     The Listing or Transaction ID to which the payment applies.
+user_id          private           billing_r         int     The user's numeric ID.
+amount           private           billing_r         float   The amount paid.
+currency_code    private           billing_r         string  The currency of the payment.
+creation_month   private           billing_r         int     Month that the payment was made.
+creation_year    private           billing_r         int     Year that the payment was made.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllUserPayments[anchor]
+
+   Method Name     findAllUserPayments
+     Synopsis      Retrieves a set of BillPayment objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/payments
+                         Name          Required      Default            Type
+                   limit             N             25          int
+                   offset            N             0           int
+                   page              N                         int
+    Parameters     user_id           Y                         user_id_or_name
+                   sort_order        N             up          enum(up, down)
+                   min_created       N                         epoch
+                   max_created       N                         epoch
+
+  Requires OAuth   Y
+ Permission Scope  billing_r
+

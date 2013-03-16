@@ -1,0 +1,82 @@
+
+ShopTranslation
+
+Overview[anchor]
+
+Represents the translation data for a Shop.
+
+Fields[anchor]
+
+       Field        Visibility Level  Permission Scope    Type                                                Description
+shop_id             public            none              int       The numeric ID for the Shop.
+language            public            none              language  The IETF language tag (e.g. 'fr') for the language of this translation.
+announcement        public            none              string    Translation of an announcement to buyers that displays on the shop's homepage.
+policy_welcome      public            none              string    Translation of the introductory text from the top of the seller's policies page (may be blank).
+policy_payment      public            none              string    Translation of the seller's policy on payment (may be blank).
+policy_shipping     public            none              string    Translation of the seller's policy on shipping (may be blank).
+policy_refunds      public            none              string    Translation of the seller's policy on refunds (may be blank).
+policy_additional   public            none              string    Translation of any additional policy information the seller provides (may be blank).
+policy_seller_info  public            none              string    Translation of the Shop's Seller information (may be blank).
+sale_message        public            none              string    Translation of a message that is sent to users who buy from this shop.
+title               public            none              string    Translation of a brief heading for the shop's main page.
+vacation_autoreply  public            none              string    Translation of a message to buyers in response to new convos (if Shop.is_vacation is true).
+vacation_message    public            none              string    Translation of a message to buyers (if Shop.is_vacation is true).
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getShopTranslation[anchor]
+
+   Method Name     getShopTranslation
+     Synopsis      Retrieves a ShopTranslation by shop_id and language
+   HTTP Method     GET
+       URI         /shops/:shop_id/translations/:language
+                       Name       Required    Default            Type
+    Parameters     shop_id      Y                       shop_id_or_name
+                   language     Y                       language
+
+  Requires OAuth   N
+ Permission Scope  none
+
+createShopTranslation[anchor]
+
+    Method Name     createShopTranslation
+     Synopsis       Creates a ShopTranslation by shop_id and language
+    HTTP Method     POST
+        URI         /shops/:shop_id/translations/:language
+                       Name      Required    Default           Type
+    Parameters      shop_id     Y                      shop_id_or_name
+                    language    Y                      language
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+updateShopTranslation[anchor]
+
+    Method Name     updateShopTranslation
+     Synopsis       Updates a ShopTranslation by shop_id and language
+    HTTP Method     PUT
+        URI         /shops/:shop_id/translations/:language
+                       Name      Required    Default           Type
+    Parameters      shop_id     Y                      shop_id_or_name
+                    language    Y                      language
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+deleteShopTranslation[anchor]
+
+    Method Name     deleteShopTranslation
+     Synopsis       Deletes a ShopTranslation by shop_id and language
+    HTTP Method     DELETE
+        URI         /shops/:shop_id/translations/:language
+                       Name      Required    Default           Type
+    Parameters      shop_id     Y                      shop_id_or_name
+                    language    Y                      language
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+

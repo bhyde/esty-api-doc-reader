@@ -1,0 +1,20 @@
+
+ParamList
+
+Overview[anchor]
+
+This is an associative array that maps parameter names to types. It has a varying number of fields with differing names.
+
+Fields[anchor]
+
+  Field    Visibility Level  Permission Scope   Type                                                                   Description
+param_name public            none              string Each field in the record represents an Etsy API method parameter. The value corresponds to one of the documented data or resource types.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

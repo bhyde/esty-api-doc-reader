@@ -1,0 +1,109 @@
+
+PaymentTemplate
+
+Overview[anchor]
+
+A payment template for a user.
+
+Fields[anchor]
+
+       Field         Visibility Level  Permission Scope   Type                                                       Description
+payment_template_id  public            none              int     The numeric ID for this payment template
+allow_bt             public            none              boolean True if the seller accepts bank transfers for payment
+allow_check          public            none              boolean True if the seller accepts checks for payment
+allow_mo             public            none              boolean True if the seller accepts money order payments
+allow_other          public            none              boolean True if the seller accepts other payments
+allow_paypal         public            none              boolean True if the seller accepts paypal
+allow_cc             public            none              boolean True if the seller accepts credit cards
+paypal_email         private           listings_r        string  The users paypal email address.
+name                 private           listings_r        string  The name of the seller.
+first_line           private           listings_r        string  The first line of the seller's address.
+second_line          private           listings_r        string  The second line of the seller's address.
+city                 private           listings_r        string  The seller's city.
+state                private           listings_r        string  The seller's state.
+zip                  private           listings_r        string  The seller's zip code.
+country_id           private           listings_r        int     The seller's country.
+user_id              private           listings_r        int     The user's numeric ID.
+listing_payment_id   public            none              int     Provided for backward compatibility to ListingPayment. This will return the same value as payment_template_id.
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope    Type                      Description
+Country      private            listings_r         Country  The full Country record of the shop's country.
+User         private            listings_r         User     The User that owns this payment template
+
+Methods[anchor]
+
+createPaymentTemplate[anchor]
+
+    Method Name     createPaymentTemplate
+     Synopsis       Creates a new PaymentTemplate
+    HTTP Method     POST
+        URI         /payments/templates
+                         Name        Required  Default    Type
+                    allow_check     N                   boolean
+                    allow_mo        N                   boolean
+                    allow_other     N                   boolean
+                    allow_paypal    N                   boolean
+                    allow_cc        N                   boolean
+                    paypal_email    N                   string
+    Parameters      name            N                   string
+                    first_line      N                   string
+                    second_line     N                   string
+                    city            N                   string
+                    state           N                   string
+                    zip             N                   string
+                    country_id      N                   int
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+
+getPaymentTemplate[anchor]
+
+    Method Name     getPaymentTemplate
+     Synopsis       Retrieves a PaymentTemplate by id.
+    HTTP Method     GET
+        URI         /payments/templates/:payment_template_id
+                             Name          Required  Default      Type
+    Parameters      payment_template_id    Y                  array(int)
+
+  Requires OAuth    Y
+ Permission Scope   listings_r
+
+updatePaymentTemplate[anchor]
+
+    Method Name     updatePaymentTemplate
+     Synopsis       Updates a PaymentTemplate
+    HTTP Method     PUT
+        URI         /payments/templates/:payment_template_id
+                             Name           Required  Default    Type
+                    allow_check            N                   boolean
+                    allow_mo               N                   boolean
+                    allow_other            N                   boolean
+                    allow_paypal           N                   boolean
+                    allow_cc               N                   boolean
+                    paypal_email           N                   string
+    Parameters      name                   N                   string
+                    first_line             N                   string
+                    second_line            N                   string
+                    city                   N                   string
+                    state                  N                   string
+                    zip                    N                   string
+                    country_id             N                   int
+                    payment_template_id    Y                   int
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+
+findAllUserPaymentTemplates[anchor]
+
+   Method Name     findAllUserPaymentTemplates
+     Synopsis      Retrieves a set of PaymentTemplate objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/payments/templates
+                       Name         Required        Default               Type
+    Parameters     user_id       Y                             user_id_or_name
+
+  Requires OAuth   Y
+ Permission Scope  listings_r
+

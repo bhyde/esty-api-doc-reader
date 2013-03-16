@@ -1,0 +1,90 @@
+
+Variations_Property
+
+Overview[anchor]
+
+Represents a property from a list of default or seller-defined properties to describe a variation of a listing. In addition to a default list including Size, Color, Finish, Dimensions and others, sellers may specify custom properties to more aptly describe their listings. When available, properties are returned as part of a Listing as the Variations association.
+
+Although a Listing can be assigned any two properties from the list of available Variations properties, some properties and values are suggested for Listings in particular categories. The Variations_PropertySet resource can be used to access suggestions for a category.
+
+Sellers are given their choice of two custom properties, which can be used for any purpose. When adding custom Variations, be sure to specify a map of property IDs and names using the custom_property_names field. NOTE: Using custom properties in place of predefined properties (Size, Color, Width, etc.) may be harmful to a Listing's search relevancy at a later date. Custom properties should only be used when no other property is suitable.
+
+Optional qualifying properties should be specified when appropriate, and may be used in search at a later date. To determine the appropriate qualifiers and their values, see the Variations_PropertySet resource. (NOTE: If the recipient_id qualifier is specified here, it will overwrite the value of recipient on the Listing. When in doubt, the value appropriate to added Variations should be preferred.)
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+     Field       Visibility Level   Permission Scope             Type                          Description
+property_id     public             none               int                        This numeric ID of this property
+formatted_name  public             none               string                     This translated name of this property
+options         public             none               array(Variations_Option)   Available options for this property
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getListingVariations[anchor]
+
+   Method Name     getListingVariations
+     Synopsis      Get the listing variations available for a listing.
+   HTTP Method     GET
+       URI         /listings/:listing_id/variations
+                          Name            Required        Default      Type
+    Parameters     listing_id          Y                             int
+
+  Requires OAuth   Y
+ Permission Scope  listings_r
+
+createListingVariations[anchor]
+
+  Method Name    createListingVariations
+    Synopsis     Update all of the listing variations available for a listing; optionally set custom property names and property qualifiers. Expects a JSON array with a collection of objects of the form: [{"property_id":200, "value":"Black"}, {"property_id":200, "value":"White"}]
+  HTTP Method    POST
+      URI        /listings/:listing_id/variations
+                           Name             Required  Default              Type
+                 listing_id                Y                   int
+                 variations                Y                   array(listing_variation)
+                 custom_property_names     N                   map(int,string)
+                 recipient_id              N                   int
+                 sizing_scale              N                   int
+   Parameters    weight_scale              N                   int
+                 height_scale              N                   int
+                 length_scale              N                   int
+                 width_scale               N                   int
+                 diameter_scale            N                   int
+                 dimensions_scale          N                   int
+
+ Requires OAuth  Y
+Permission Scope listings_w
+
+createListingVariation[anchor]
+
+    Method Name     createListingVariation
+     Synopsis       Add a new listing variation for a listing.
+    HTTP Method     POST
+        URI         /listings/:listing_id/variations/:property_id
+                          Name          Required     Default     Type
+                    listing_id        Y                        int
+    Parameters      property_id       Y                        int
+                    value             Y                        string
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+
+deleteListingVariation[anchor]
+
+    Method Name     deleteListingVariation
+     Synopsis       Remove a listing variation for a listing.
+    HTTP Method     DELETE
+        URI         /listings/:listing_id/variations/:property_id
+                          Name          Required     Default     Type
+                    listing_id        Y                        int
+    Parameters      property_id       Y                        int
+                    value             Y                        string
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+

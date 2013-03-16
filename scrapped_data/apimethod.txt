@@ -1,0 +1,34 @@
+
+ApiMethod
+
+Overview[anchor]
+
+A method call from the Etsy API.
+
+Fields[anchor]
+
+   Field     Visibility Level  Permission Scope     Type                                            Description
+name         public            none              string     The method's descriptive name.
+uri          public            none              string     The method's URI pattern. Parameters are marked with a leading colon.
+params       public            none              ParamList  An array of method parameters and types.
+defaults     public            none              ParamList  An array of default values for parameters. Parameters that lack a default are required.
+type         public            none              string     The resource type returned by the method.
+visibility   public            none              string     The method's visibility level. Methods marked "private" require authentication.
+http_method  public            none              string     The HTTP method used to call the API method.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getMethodTable[anchor]
+
+    Method Name     getMethodTable
+     Synopsis       Get a list of all methods available.
+    HTTP Method     GET
+        URI         /
+    Parameters      none
+  Requires OAuth    N
+ Permission Scope   none
+

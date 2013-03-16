@@ -1,0 +1,41 @@
+
+Region
+
+Overview[anchor]
+
+Represents a collection of countries to which an item ships.
+
+Fields[anchor]
+
+   Field      Visibility Level   Permission Scope   Type              Description
+region_id    public             none               int     The numeric ID of this region.
+region_name  public             none               string  The name of the region.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllRegion[anchor]
+
+     Method Name      findAllRegion
+      Synopsis        Finds all Region.
+     HTTP Method      GET
+         URI          /regions
+     Parameters       none
+   Requires OAuth     N
+  Permission Scope    none
+
+getRegion[anchor]
+
+    Method Name     getRegion
+     Synopsis       Retrieves a Region by id.
+    HTTP Method     GET
+        URI         /regions/:region_id
+                       Name      Required  Default      Type
+    Parameters      region_id   Y                   array(int)
+
+  Requires OAuth    N
+ Permission Scope   none
+

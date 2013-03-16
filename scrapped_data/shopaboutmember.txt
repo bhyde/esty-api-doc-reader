@@ -1,0 +1,28 @@
+
+ShopAboutMember
+
+Overview[anchor]
+
+Data about a user's shop.
+
+Fields[anchor]
+
+        Field         Visibility Level  Permission Scope    Type                                Description
+shop_about_member_id  public            none              int      Numeric ID of this ShopAboutMember
+shop_id               public            none              int      Numeric ID of the associated Shop
+name                  public            none              string   The name of this ShopAboutMember
+role                  public            none              string   The role of this ShopAboutMember
+bio                   public            none              string   The bio of this ShopAboutMember
+rank                  public            none              int      The order of this member in a list
+is_owner              public            none              boolean  Whether this Member is an owner. A Shop can have multiple owners.
+url_90x90             public            none              string   The url to a thumbnail of the image, exactly 90px by 90px.
+url_190x190           public            none              string   The url to a thumbnail of the image, exactly 190px by 190px.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

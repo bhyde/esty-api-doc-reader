@@ -1,0 +1,92 @@
+
+FavoriteUser
+
+Overview[anchor]
+
+Represents the association between a user and another user they've marked as favorite.
+
+Fields[anchor]
+
+      Field       Visibility Level  Permission Scope  Type                                               Description
+user_id           public/private    favorites_rw      int   The user's numeric ID. Note: This field may be absent, depending on the user's privacy settings.
+favorite_user_id  public            none              int   (DEPRECATED - do not use) The numberic ID of this favorite user association.
+target_user_id    public            none              int   The targeted favorite user's numeric ID.
+creation_tsz      public            none              float The date and time that the user was favorited.
+
+Associations[anchor]
+
+Association Visibility Level  Permission Scope  Type                                                            Description
+User        public/private    favorites_rw      User The user who marked the target user as a favorite. Note: This field may be absent, depending on the user's privacy settings.
+TargetUser  public            none              User The user who was marked as a favorite.
+
+Methods[anchor]
+
+findAllUserFavoredBy[anchor]
+
+   Method Name     findAllUserFavoredBy
+     Synopsis      Retrieves a set of FavoriteUser objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/favored-by
+                       Name        Required      Default               Type
+                   user_id      Y                           user_id_or_name
+    Parameters     limit        N              25           int
+                   offset       N              0            int
+                   page         N                           int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllUserFavoriteUsers[anchor]
+
+    Method Name     findAllUserFavoriteUsers
+     Synopsis       Finds all favorite users for a user
+    HTTP Method     GET
+        URI         /users/:user_id/favorites/users
+                      Name    Required  Default         Type
+                    user_id  Y                   user_id_or_name
+    Parameters      limit    N          25       int
+                    offset   N          0        int
+                    page     N                   int
+
+  Requires OAuth    N
+ Permission Scope   none
+
+findUserFavoriteUsers[anchor]
+
+    Method Name     findUserFavoriteUsers
+     Synopsis       Finds a favorite user for a user
+    HTTP Method     GET
+        URI         /users/:user_id/favorites/users/:target_user_id
+                          Name       Required  Default         Type
+    Parameters      user_id          Y                  user_id_or_name
+                    target_user_id   Y                  user_id_or_name
+
+  Requires OAuth    N
+ Permission Scope   none
+
+createUserFavoriteUsers[anchor]
+
+    Method Name     createUserFavoriteUsers
+     Synopsis       Creates a new favorite listing for a user
+    HTTP Method     POST
+        URI         /users/:user_id/favorites/users/:target_user_id
+                          Name       Required  Default         Type
+    Parameters      user_id          Y                  user_id_or_name
+                    target_user_id   Y                  user_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   favorites_rw
+
+deleteUserFavoriteUsers[anchor]
+
+    Method Name     deleteUserFavoriteUsers
+     Synopsis       Delete a favorite listing for a user
+    HTTP Method     DELETE
+        URI         /users/:user_id/favorites/users/:target_user_id
+                          Name       Required  Default         Type
+    Parameters      user_id          Y                  user_id_or_name
+                    target_user_id   Y                  user_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   favorites_rw
+

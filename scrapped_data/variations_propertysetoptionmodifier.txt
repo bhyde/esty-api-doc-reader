@@ -1,0 +1,44 @@
+
+Variations_PropertySetOptionModifier
+
+Overview[anchor]
+
+Represents rules for display of Variations property options on Etsy, dependent on one or more qualifiers (size scale, recipient, etc.) The resource specified text that should come before and after the option.
+
+When accessing existing Variations_Option records on Etsy listings, the field formatted_value will already have these display rules applied. This resource is only useful when adding new Variation options to listings, in order to preview the options as they will appear once saved.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+ Field  Visibility Level  Permission Scope   Type                             Description
+prefix  public            none              string  Indicates text that should be prepended to property options
+suffix  public            none              string  Indicates text that should be appended to property options
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getPropertyOptionModifier[anchor]
+
+    Method Name     getPropertyOptionModifier
+     Synopsis       Add a value for a given property.
+    HTTP Method     GET
+        URI         /property_options/modifiers
+                           Name          Required  Default  Type
+                    property_id         Y                   int
+                    category_id         N                   int
+                    recipient_id        N                   int
+                    sizing_scale        N                   int
+    Parameters      weight_scale        N                   int
+                    height_scale        N                   int
+                    length_scale        N                   int
+                    width_scale         N                   int
+                    diameter_scale      N                   int
+                    dimensions_scale    N                   int
+
+  Requires OAuth    N
+ Permission Scope   none
+

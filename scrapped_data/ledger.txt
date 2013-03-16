@@ -1,0 +1,34 @@
+
+Ledger
+
+Overview[anchor]
+
+Represents a shop's ledger.
+
+Fields[anchor]
+
+   Field     Visibility Level  Permission Scope   Type                               Description
+ledger_id    private           transactions_r    int     The ledger's numeric ID.
+shop_id      private           transactions_r    string  The shop's numeric ID.
+currency     private           transactions_r    string  The currency code of the shop.
+create_date  private           transactions_r    int     The date and time the ledger was created in Epoch seconds.
+update_date  private           transactions_r    int     The date and time the ledger was last updated in Epoch seconds.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findLedger[anchor]
+
+    Method Name     findLedger
+     Synopsis       Get a Shop Payment Account Ledger
+    HTTP Method     GET
+        URI         /shops/:shop_id/ledger/
+                      Name    Required  Default         Type
+    Parameters      shop_id  Y                   shop_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+

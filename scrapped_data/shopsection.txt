@@ -1,0 +1,93 @@
+
+ShopSection
+
+Overview[anchor]
+
+A section within a user's shop.
+
+Fields[anchor]
+
+        Field          Visibility Level  Permission Scope   Type                           Description
+shop_section_id        public            none              int     The numeric ID of the shop section.
+title                  public            none              string  The title of the section.
+rank                   public            none              int     Display order.
+user_id                public            none              int     The ID of the user who owns this shop section.
+active_listing_count   public            none              int     The number of active listings currently in the section.
+
+Associations[anchor]
+
+ Association  Visibility Level  Permission Scope               Type                                  Description
+Shop          public            none              Shop                            The shop to which this section belongs.
+Listings      public            none              array(Listing)                  An array of listings in this section.
+Translations  public            none              array(ShopSectionTranslation)   An array of translations for this ShopSection.
+
+Methods[anchor]
+
+findAllShopSections[anchor]
+
+   Method Name     findAllShopSections
+     Synopsis      Retrieves a set of ShopSection objects associated to a Shop.
+   HTTP Method     GET
+       URI         /shops/:shop_id/sections
+                       Name        Required      Default               Type
+    Parameters     shop_id      Y                           shop_id_or_name
+
+  Requires OAuth   N
+ Permission Scope  none
+
+createShopSection[anchor]
+
+    Method Name     createShopSection
+     Synopsis       Creates a new ShopSection.
+    HTTP Method     POST
+        URI         /shops/:shop_id/sections
+                      Name    Required  Default         Type
+                    shop_id  Y                   shop_id_or_name
+    Parameters      title    N                   text
+                    user_id  N                   int
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+getShopSection[anchor]
+
+    Method Name     getShopSection
+     Synopsis       Retrieves a ShopSection by id and shop_id
+    HTTP Method     GET
+        URI         /shops/:shop_id/sections/:shop_section_id
+                           Name        Required  Default         Type
+    Parameters      shop_id            Y                  shop_id_or_name
+                    shop_section_id    Y                  array(int)
+
+  Requires OAuth    N
+ Permission Scope   none
+
+updateShopSection[anchor]
+
+    Method Name     updateShopSection
+     Synopsis       Updates a ShopSection with the given id.
+    HTTP Method     PUT
+        URI         /shops/:shop_id/sections/:shop_section_id
+                           Name        Required  Default         Type
+                    shop_id            Y                  shop_id_or_name
+                    shop_section_id    Y                  int
+    Parameters      title              N                  text
+                    user_id            N                  int
+                    rank               N                  int
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+deleteShopSection[anchor]
+
+    Method Name     deleteShopSection
+     Synopsis       Deletes the ShopSection with the given id.
+    HTTP Method     DELETE
+        URI         /shops/:shop_id/sections/:shop_section_id
+                           Name        Required  Default         Type
+    Parameters      shop_id            Y                  shop_id_or_name
+                    shop_section_id    Y                  int
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+

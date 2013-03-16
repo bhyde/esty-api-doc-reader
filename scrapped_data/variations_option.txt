@@ -1,0 +1,24 @@
+
+Variations_Option
+
+Overview[anchor]
+
+Represents an available listing variation option — e.g. Small for the Size property. Options are often provided as a collection of the Variations_Property resource.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+     Field        Visibility Level   Permission Scope   Type                     Description
+value_id         public             none               int     The numeric ID of the option
+value            public             none               string  The normalized value of the option
+formatted_value  public             none               string  The formatted/translated value of the option
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

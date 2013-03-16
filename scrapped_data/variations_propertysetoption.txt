@@ -1,0 +1,45 @@
+
+Variations_PropertySetOption
+
+Overview[anchor]
+
+Represents a suggested option value for a listing on Etsy, dependent on the listing's category, and one or more qualified properties (size scale, recipient, etc.)
+
+Although Etsy listings can contain any value for any available property, it's recommended to use these suggested options whenever possible. They may be integrated into Etsy search at a later date.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+       Field         Visibility Level  Permission Scope   Type                     Description
+property_option_id   public            none              int     The property option's unique ID
+name                 public            none              string  property option name
+formatted_name       public            none              string  property option name, formatted for display
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllSuggestedPropertyOptions[anchor]
+
+   Method Name     findAllSuggestedPropertyOptions
+     Synopsis      Finds all suggested property options for a given property.
+   HTTP Method     GET
+       URI         /property_options/suggested
+                               Name                Required       Default     Type
+                   property_id                  Y                            int
+                   category_id                  N                            int
+                   recipient_id                 N                            int
+                   sizing_scale                 N                            int
+    Parameters     weight_scale                 N                            int
+                   height_scale                 N                            int
+                   length_scale                 N                            int
+                   width_scale                  N                            int
+                   diameter_scale               N                            int
+                   dimensions_scale             N                            int
+
+  Requires OAuth   N
+ Permission Scope  none
+

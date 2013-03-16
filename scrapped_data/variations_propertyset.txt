@@ -1,0 +1,36 @@
+
+Variations_PropertySet
+
+Overview[anchor]
+
+When managing variations of a listing, a property set is a data structure that defines how a property is specified for a given category. For instance, the Size property requires varying degrees of specificity when describing Clothing: Pants as opposed to Jewelery: Rings; the additional specificity allows us to suggest more appropriate options — e.g. men’s UK pant sizes — for a given property. Properties and Property Sets describes in further detail how to interpret this data.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+        Field          Visibility Level Permission Scope                   Type                                                                                        Description
+property_set_id        public           none             int                                      Numeric ID of this property set
+properties             public           none             map(int,Variations_PropertySetProperty)  Dictionary of properties that are available as variations
+qualifying_properties  public           none             map(int,Variations_Property)             Dictionary of properties that are used to add specificity to one or more variation properties
+options                public           none             map(int,string)                          Dictionary of available property options for any of the qualifying properties
+qualifiers             public           none             map(int,Variations_PropertyQualifier)    Recursive data-structure indicating the property options available for qualifying_properties, and the nested qualifiers available for each option
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findPropertySet[anchor]
+
+    Method Name     findPropertySet
+     Synopsis       Find the property set for the category id
+    HTTP Method     GET
+        URI         /property_sets
+                          Name         Required    Default    Type
+    Parameters      category_id      N                       int
+
+  Requires OAuth    N
+ Permission Scope   none
+

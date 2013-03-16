@@ -1,0 +1,95 @@
+
+FavoriteListing
+
+Overview[anchor]
+
+Represents the association between a user and a listing they've marked as favorite.
+
+Fields[anchor]
+
+       Field         Visibility Level  Permission Scope   Type                                               Description
+listing_id           public            none              int    The listings numeric ID.
+user_id              public/private    favorites_rw      int    The user's numeric ID. Note: This field may be absent, depending on the user's privacy settings.
+listing_state        public            none              string The state of the listing.
+create_date          public            none              int    The date and time that the listing was favorited.
+state                public            none              string (DEPRECATED - use 'listing_state') The state of the listing.
+creation_tsz         public            none              float  (DEPRECATED - use 'create_date') The date and time that the listing was favorited.
+favorite_listing_id  public            none              int    (DEPRECATED - do not use) The numeric ID of this favorite listing association.
+
+Associations[anchor]
+
+Association  Visibility Level  Permission Scope   Type                                                       Description
+User         public/private    favorites_rw      User    The user who favorited the listing. Note: This field may be absent, depending on the user's privacy settings.
+Listing      public            none              Listing The favorited listing.
+
+Methods[anchor]
+
+findAllListingFavoredBy[anchor]
+
+   Method Name     findAllListingFavoredBy
+     Synopsis      Retrieves a set of FavoriteListing objects associated to a Listing.
+   HTTP Method     GET
+       URI         /listings/:listing_id/favored-by
+                             Name                 Required            Default         Type
+                   listing_id               Y                                      int
+    Parameters     limit                    N                    25                int
+                   offset                   N                    0                 int
+                   page                     N                                      int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllUserFavoriteListings[anchor]
+
+    Method Name     findAllUserFavoriteListings
+     Synopsis       Finds all favorite listings for a user
+    HTTP Method     GET
+        URI         /users/:user_id/favorites/listings
+                      Name    Required  Default         Type
+                    user_id  Y                   user_id_or_name
+    Parameters      limit    N          25       int
+                    offset   N          0        int
+                    page     N                   int
+
+  Requires OAuth    N
+ Permission Scope   none
+
+findUserFavoriteListings[anchor]
+
+    Method Name     findUserFavoriteListings
+     Synopsis       Finds a favorite listing for a user
+    HTTP Method     GET
+        URI         /users/:user_id/favorites/listings/:listing_id
+                        Name      Required   Default         Type
+    Parameters      user_id      Y                    user_id_or_name
+                    listing_id   Y                    int
+
+  Requires OAuth    N
+ Permission Scope   none
+
+createUserFavoriteListings[anchor]
+
+    Method Name     createUserFavoriteListings
+     Synopsis       Creates a new favorite listing for a user
+    HTTP Method     POST
+        URI         /users/:user_id/favorites/listings/:listing_id
+                        Name      Required   Default         Type
+    Parameters      user_id      Y                    user_id_or_name
+                    listing_id   Y                    int
+
+  Requires OAuth    Y
+ Permission Scope   favorites_rw
+
+deleteUserFavoriteListings[anchor]
+
+    Method Name     deleteUserFavoriteListings
+     Synopsis       Delete a favorite listing for a user
+    HTTP Method     DELETE
+        URI         /users/:user_id/favorites/listings/:listing_id
+                        Name      Required   Default         Type
+    Parameters      user_id      Y                    user_id_or_name
+                    listing_id   Y                    int
+
+  Requires OAuth    Y
+ Permission Scope   favorites_rw
+

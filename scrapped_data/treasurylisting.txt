@@ -1,0 +1,45 @@
+
+TreasuryListing
+
+Overview[anchor]
+
+A subset of the Listing resource stored in a Treasury
+
+Fields[anchor]
+
+    Field     Visibility Level  Permission Scope          Type                                    Description
+data          public            none              TreasuryListingData  The detailed fields of the listing
+creation_tsz  public            none              float                Time the listing was added to this Treasury, in epoch seconds
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+addTreasuryListing[anchor]
+
+    Method Name     addTreasuryListing
+     Synopsis       Add listing to a Treasury
+    HTTP Method     POST
+        URI         /treasuries/:treasury_key/listings
+                         Name       Required  Default      Type
+    Parameters      treasury_key   Y                   treasury_id
+                    listing_id     Y                   int
+
+  Requires OAuth    Y
+ Permission Scope   treasury_w
+
+removeTreasuryListing[anchor]
+
+    Method Name     removeTreasuryListing
+     Synopsis       Remove listing from a Treasury
+    HTTP Method     DELETE
+        URI         /treasuries/:treasury_key/listings/:listing_id
+                          Name        Required    Default       Type
+    Parameters      treasury_key     Y                     treasury_id
+                    listing_id       Y                     int
+
+  Requires OAuth    Y
+ Permission Scope   treasury_w
+

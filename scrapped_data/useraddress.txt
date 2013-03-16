@@ -1,0 +1,87 @@
+
+UserAddress
+
+Overview[anchor]
+
+Represents a user's address.
+
+Fields[anchor]
+
+     Field        Visibility Level   Permission Scope   Type                    Description
+user_address_id  private            address_r          int     The numeric ID of the user's address.
+user_id          private            address_r          int     The user's numeric ID.
+name             private            address_r          text    The user's name for this address.
+first_line       private            address_r          text    The first line of the user's address.
+second_line      private            address_r          text    The second line of the user's address.
+city             private            address_r          text    The city field of the user's address.
+state            private            address_r          text    The state field of the user's address.
+zip              private            address_r          text    The zip code field of the user's address.
+country_id       private            address_r          int     The country's numeric ID.
+country_name     private            address_r          string  The name of the user's country
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope    Type                       Description
+Country      private            address_r          Country  The full Country record for the user's address.
+User         private            address_r          User     The full User record whom entered this address.
+
+Methods[anchor]
+
+findAllUserAddresses[anchor]
+
+   Method Name     findAllUserAddresses
+     Synopsis      Retrieves a set of UserAddress objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/addresses
+                       Name        Required      Default               Type
+                   user_id      Y                           user_id_or_name
+    Parameters     limit        N              25           int
+                   offset       N              0            int
+                   page         N                           int
+
+  Requires OAuth   Y
+ Permission Scope  address_r
+
+createUserAddress[anchor]
+
+    Method Name     createUserAddress
+     Synopsis       Creates a new UserAddress.
+    HTTP Method     POST
+        URI         /users/:user_id/addresses/
+                        Name      Required  Default         Type
+                    user_id       Y                  user_id_or_name
+                    name          Y                  string
+                    first_line    Y                  string
+    Parameters      second_line   N                  string
+                    city          Y                  string
+                    state         N                  string
+                    zip           Y                  string
+                    country_id    Y                  int
+
+  Requires OAuth    Y
+ Permission Scope   address_w
+
+getUserAddress[anchor]
+
+    Method Name     getUserAddress
+     Synopsis       Retrieves a UserAddress by id.
+    HTTP Method     GET
+        URI         /users/:user_id/addresses/:user_address_id
+                           Name        Required  Default      Type
+    Parameters      user_address_id    Y                  array(int)
+
+  Requires OAuth    Y
+ Permission Scope   address_r
+
+deleteUserAddress[anchor]
+
+    Method Name     deleteUserAddress
+     Synopsis       Deletes the UserAddress with the given id.
+    HTTP Method     DELETE
+        URI         /users/:user_id/addresses/:user_address_id
+                            Name          Required    Default   Type
+    Parameters      user_address_id      Y                      int
+
+  Requires OAuth    Y
+ Permission Scope   address_w
+

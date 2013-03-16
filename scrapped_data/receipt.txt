@@ -1,0 +1,164 @@
+
+Receipt
+
+Overview[anchor]
+
+Represents proof of payment from a user to a shop for one or more transactions.
+
+Fields[anchor]
+
+         Field          Visibility Level Permission Scope  Type                                                                                  Description
+receipt_id              private          transactions_r   int     The receipt's numeric ID.
+order_id                private          transactions_r   int     The numeric ID of the order this receipt is associated with.
+seller_user_id          private          transactions_r   int     The numeric ID of the seller for this receipt.
+buyer_user_id           private          transactions_r   int     The numeric ID of the buyer for this receipt.
+creation_tsz            private          transactions_r   float   Creation time, in epoch seconds.
+last_modified_tsz       private          transactions_r   float   Last modification time, in epoch seconds.
+name                    private          transactions_r   string  The name portion of the buyer's address.
+first_line              private          transactions_r   string  The first line of the buyer's address.
+second_line             private          transactions_r   string  The second line of the buyer's address.
+city                    private          transactions_r   string  The city for the buyer's address.
+state                   private          transactions_r   string  The state for the buyer's address.
+zip                     private          transactions_r   string  The zip code of the buyer's address.
+country_id              private          transactions_r   int     The numeric ID of the buyer's country.
+payment_method          private          transactions_r   string  The payment method used. May be pp, cc, ck, mo, or other (stands for paypal, credit card, check, money order, other).
+payment_email           private          transactions_r   string  The email address where payment confirmation is sent.
+message_from_seller     private          transactions_r   string  An optional message from the seller.
+message_from_buyer      private          transactions_r   string  An optional message from the buyer.
+was_paid                private          transactions_r   boolean True if the receipt was paid.
+total_tax_cost          private          transactions_r   float   The total sales tax of the receipt.
+total_price             private          transactions_r   float   Sum of the individual listings' (price * quantity). Does not included tax or shipping costs.
+total_shipping_cost     private          transactions_r   float   The total shipping cost of the receipt.
+currency_code           private          transactions_r   string  The ISO code (alphabetic) for the seller's native currency.
+message_from_payment    private          transactions_r   string  The machine generated acknowledgement from the payment system.
+was_shipped             private          transactions_r   boolean True if the items in the receipt were shipped.
+buyer_email             private          transactions_r   string  The email address of the buyer.
+seller_email            private          transactions_r   string  The email address of the seller.
+discount_amt            private          transactions_r   float   The total discount for the receipt, if using a discount (percent or fixed) Coupon. Free shipping Coupons are not reflected here; check the Coupon object for these.
+subtotal                private          transactions_r   float   total_price minus coupon discounts. Does not included tax or shipping costs.
+grandtotal              private          transactions_r   float   total_price minus coupon discount plus tax and shipping costs.
+shipping_tracking_code  private          transactions_r   string  The tracking code for the shipment.
+shipping_tracking_url   private          transactions_r   string  The tracking URL for the shipment.
+shipping_carrier        private          transactions_r   string  The shipping carrier.
+shipping_note           private          transactions_r   string  The shipping notification note text.
+
+Associations[anchor]
+
+ Association  Visibility Level  Permission Scope         Type                                     Description
+Coupon        private           transactions_r    Coupon              The coupon for the receipt.
+Country       private           transactions_r    Country             The country to which the order was shipped.
+Buyer         private           transactions_r    User                The buyer of the items in this receipt.
+Order         private           transactions_r    Order               The order this receipt is part of. (Only visible to the buyer.)
+Seller        private           transactions_r    User                The seller of the items in this receipt.
+Transactions  private           transactions_r    array(Transaction)  The transactions associated to this receipt.
+Listings      private           transactions_r    array(Listing)      The listings associated to this receipt.
+
+Methods[anchor]
+
+createReceiptOnSandbox[anchor]
+
+  Method Name    createReceiptOnSandbox
+    Synopsis     Creates a purchase for the current OAuth user, including Order, Receipt and Transaction resources. This method is only available via the Sandbox API. Listing IDs must be active, and belong to the same seller user ID. The buyer must have at least one UserAddress record, or an error will be thrown.
+  HTTP Method    POST
+      URI        /receipts
+                      Name       Required    Default       Type
+   Parameters    listing_id     Y                     array(int)
+
+ Requires OAuth  Y
+Permission Scope transactions_w
+
+getReceipt[anchor]
+
+    Method Name     getReceipt
+     Synopsis       Retrieves a Receipt by id.
+    HTTP Method     GET
+        URI         /receipts/:receipt_id
+                        Name      Required  Default      Type
+    Parameters      receipt_id   Y                   array(int)
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+
+updateReceipt[anchor]
+
+    Method Name     updateReceipt
+     Synopsis       Updates a Receipt
+    HTTP Method     PUT
+        URI         /receipts/:receipt_id
+                             Name           Required  Default    Type
+                    receipt_id             Y                   int
+                    was_paid               N                   boolean
+    Parameters      was_shipped            N                   boolean
+                    message_from_seller    N                   string
+                    message_from_buyer     N                   string
+
+  Requires OAuth    Y
+ Permission Scope   transactions_w
+
+findAllOrderReceipts[anchor]
+
+   Method Name     findAllOrderReceipts
+     Synopsis      Retrieves a set of Receipt objects associated to a Order.
+   HTTP Method     GET
+       URI         /orders/:order_id/receipts
+                          Name             Required          Default        Type
+                   order_id           Y                                   int
+    Parameters     limit              N                  25               int
+                   offset             N                  0                int
+                   page               N                                   int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+
+findAllShopReceipts[anchor]
+
+   Method Name     findAllShopReceipts
+     Synopsis      Retrieves a set of Receipt objects associated to a Shop.
+   HTTP Method     GET
+       URI         /shops/:shop_id/receipts
+                            Name           Required   Default         Type
+                   shop_id                Y                    shop_id_or_name
+                   min_created            N                    epoch
+                   max_created            N                    epoch
+                   min_last_modified      N                    int
+    Parameters     max_last_modified      N                    int
+                   limit                  N          25        int
+                   offset                 N          0         int
+                   page                   N                    int
+                   was_paid               N                    boolean
+                   was_shipped            N                    boolean
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+
+findAllShopReceiptsByStatus[anchor]
+
+   Method Name    findAllShopReceiptsByStatus
+    Synopsis      Retrieves a set of Receipt objects associated to a Shop based on the status.
+   HTTP Method    GET
+       URI        /shops/:shop_id/receipts/:status
+                   Name   Required  Default                              Type
+                  shop_id Y                 shop_id_or_name
+                  status  Y                 enum(open, unshipped, unpaid, completed, processing, all)
+   Parameters     limit   N         25      int
+                  offset  N         0       int
+                  page    N                 int
+
+ Requires OAuth   Y
+Permission Scope  transactions_r
+
+findAllUserBuyerReceipts[anchor]
+
+   Method Name     findAllUserBuyerReceipts
+     Synopsis      Retrieves a set of Receipt objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/receipts
+                       Name       Required      Default              Type
+                   user_id      Y                          user_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+

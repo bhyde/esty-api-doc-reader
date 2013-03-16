@@ -1,0 +1,77 @@
+
+ShopSectionTranslation
+
+Overview[anchor]
+
+Represents the translation data for a ShopSection.
+
+Fields[anchor]
+
+     Field       Visibility Level  Permission Scope    Type                                    Description
+shop_section_id  public            none              int       The numeric ID for the ShopSection.
+language         public            none              language  The IETF language tag (e.g. 'fr') for the language of this translation.
+title            public            none              string    Translation of title of ShopSection.
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope      Type                       Description
+ShopSection  public             none               ShopSection  The ShopSection this translation belongs to.
+
+Methods[anchor]
+
+getShopSectionTranslation[anchor]
+
+   Method Name     getShopSectionTranslation
+     Synopsis      Retrieves a ShopSectionTranslation by shop_id, shop_section_id and language
+   HTTP Method     GET
+       URI         /shops/:shop_id/sections/:shop_section_id/translations/:language
+                              Name               Required      Default               Type
+                   shop_id                    Y                           shop_id_or_name
+    Parameters     shop_section_id            Y                           int
+                   language                   Y                           language
+
+  Requires OAuth   N
+ Permission Scope  none
+
+createShopSectionTranslation[anchor]
+
+   Method Name     createShopSectionTranslation
+     Synopsis      Creates a ShopSectionTranslation by shop_id, shop_section_id and language
+   HTTP Method     POST
+       URI         /shops/:shop_id/sections/:shop_section_id/translations/:language
+                             Name               Required      Default              Type
+                   shop_id                   Y                           shop_id_or_name
+    Parameters     shop_section_id           Y                           int
+                   language                  Y                           language
+
+  Requires OAuth   Y
+ Permission Scope  shops_rw
+
+updateShopSectionTranslation[anchor]
+
+   Method Name     updateShopSectionTranslation
+     Synopsis      Updates a ShopSectionTranslation by shop_id, shop_section_id and language
+   HTTP Method     PUT
+       URI         /shops/:shop_id/sections/:shop_section_id/translations/:language
+                             Name               Required      Default              Type
+                   shop_id                   Y                           shop_id_or_name
+    Parameters     shop_section_id           Y                           int
+                   language                  Y                           language
+
+  Requires OAuth   Y
+ Permission Scope  shops_rw
+
+deleteShopSectionTranslation[anchor]
+
+   Method Name     deleteShopSectionTranslation
+     Synopsis      Deletes a ShopSectionTranslation by shop_id, shop_section_id and language
+   HTTP Method     DELETE
+       URI         /shops/:shop_id/sections/:shop_section_id/translations/:language
+                             Name               Required      Default              Type
+                   shop_id                   Y                           shop_id_or_name
+    Parameters     shop_section_id           Y                           int
+                   language                  Y                           language
+
+  Requires OAuth   Y
+ Permission Scope  shops_rw
+

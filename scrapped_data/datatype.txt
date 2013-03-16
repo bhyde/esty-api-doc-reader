@@ -1,0 +1,61 @@
+
+DataType
+
+Overview[anchor]
+
+Describes an input type.
+
+Fields[anchor]
+
+ Field   Visibility Level   Permission Scope       Type                 Description
+type    public             none               string         Base type of data
+values  public             none               array(string)  Allowable values (for an enum.)
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+describeOccasionEnum[anchor]
+
+    Method Name     describeOccasionEnum
+     Synopsis       Describes the legal values for Listing.occasion.
+    HTTP Method     GET
+        URI         /types/enum/occasion
+    Parameters      none
+  Requires OAuth    N
+ Permission Scope   none
+
+describeRecipientEnum[anchor]
+
+    Method Name     describeRecipientEnum
+     Synopsis       Describes the legal values for Listing.recipient.
+    HTTP Method     GET
+        URI         /types/enum/recipient
+    Parameters      none
+  Requires OAuth    N
+ Permission Scope   none
+
+describeWhenMadeEnum[anchor]
+
+    Method Name     describeWhenMadeEnum
+     Synopsis       Describes the legal values for Listing.when_made.
+    HTTP Method     GET
+        URI         /types/enum/when_made
+                             Name            Required    Default    Type
+    Parameters      include_formatted       N                     boolean
+
+  Requires OAuth    N
+ Permission Scope   none
+
+describeWhoMadeEnum[anchor]
+
+    Method Name     describeWhoMadeEnum
+     Synopsis       Describes the legal values for Listing.who_made.
+    HTTP Method     GET
+        URI         /types/enum/who_made
+    Parameters      none
+  Requires OAuth    N
+ Permission Scope   none
+

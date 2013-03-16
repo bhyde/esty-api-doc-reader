@@ -1,0 +1,167 @@
+
+Feedback
+
+Overview[anchor]
+
+Etsy allows buyers and sellers to leave feedback for one another about a specific transaction. Each feedback record contains a short message from the buyer or seller, a value of -1, 0 or 1, and information about the item that was purchased.
+
+Each feedback record has a buyer, a seller, an author, and a subject. Because feedback is a two-way process, each transaction on Etsy can have up to two feedback records, one left by a buyer in reference to a seller, and one left by a seller in reference to a buyer. To determine the context of a feedback record, you will neeed to examine both the creator_user_id and seller_user_id fields to determine whether the author of the feedback was the buyer or the seller in the transaction.
+
+Feedback and Privacy Settings[anchor]
+
+As of March 14, 2011, all purchases on Etsy are hidden from public areas. This has a direct effect on how feedback records are displayed in the API, since they contain information about a member's purchases. Certain fields of feedback records are now treated as private--this means that they can only been seen using the private API, with either the buyer or seller's OAuth credentials. If these conditions are not met, the fields will be missing from feedback responses.
+
+The context of the API request (whether you are requesting the buyer's or the seller's feedback) has an impact on which fields are considered private. In a nutshell:
+
+  • When querying a buyer's feedback, the seller's identity and the purchased listing will be private.
+  • When querying a seller's feedback, the buyer's identity will be private.
+
+The following table gives detailed information on which feeds will be private in various contexts. "Feedback Author" refers to the member who left the feedback (either the buyer, or the seller). "Viewing Context" refers to the member whose user ID was used to query the feedback (whether we are viewing feedback for the seller, or for the buyer).
+
+Viewing Context  Feedback Author  Feedback Subject  Basic Fields  Buyer Fields  Seller Fields  Purchase Fields  Author Fields  Subject Fields
+     Buyer            Buyer            Seller       public        public        private        private          public         private
+     Buyer            Seller            Buyer       public        public        private        private          private        public
+     Seller           Buyer            Seller       public        private       public         public           private        public
+     Seller           Seller            Buyer       public        private       public         public           public         private
+
+This table lists which fields fall under the general headings in the table above:
+
+          Field                  Group
+       feedback_id        Basic Fields
+      creation_tsz        Basic Fields
+         message          Basic Fields
+          value           Basic Fields
+     transaction_id       Purchase Fields
+       Transaction        Purchase Fields
+         Listing          Purchase Fields
+    image_feedback_id     Purchase Fields
+     image_url_25x25      Purchase Fields
+   image_url_fullxfull    Purchase Fields
+      buyer_user_id       Buyer Fields
+          Buyer           Buyer Fields
+     seller_user_id       Seller Fields
+         Seller           Seller Fields
+     creator_user_id      Author Fields
+         Author           Author Fields
+     target_user_id       Subject Fields
+         Subject          Subject Fields
+
+Fields[anchor]
+
+       Field         Visibility Level  Permission Scope   Type                                                                       Description
+feedback_id          public            none              int    The feedback record's numeric ID.
+transaction_id       public/private    feedback_r        int    The transaction's numeric ID.
+creator_user_id      public/private    feedback_r        int    The numeric ID of the user who wrote this feedback. Note: This field may be absent, depending on the buyer's privacy settings.
+target_user_id       public/private    feedback_r        int    The numeric ID of the user who received this feedback. Note: This field may be absent, depending on the buyer's privacy settings.
+seller_user_id       public/private    feedback_r        int    The numeric ID of the user who was the seller in this transaction.
+buyer_user_id        public/private    feedback_r        int    The numeric ID of the user who was the buyer in this transaction. Note: This field may be absent, depending on the buyer's privacy settings.
+creation_tsz         public            none              float  Creation time, in epoch seconds.
+message              public            none              string A message left by the author, explaining the feedback.
+value                public            none              int    The feedback's value; 1 is positive, -1 is negative, and 0 is neutral.
+image_feedback_id    public/private    feedback_r        int    The numeric ID of the feedback's image (if present). Note: This field may be absent, depending on the buyer's privacy settings.
+image_url_25x25      public/private    feedback_r        string The url to a photo provided with the feedback, dimensions 25x25. Note: This field may be absent, depending on the buyer's privacy settings.
+image_url_155x125    public/private    feedback_r        string The url to a photo provided with the feedback, dimensions 155x125. Note: This field may be absent, depending on the buyer's privacy settings.
+image_url_fullxfull  public/private    feedback_r        string The url to a photo provided with the feedback, dimensions fullxfull. Note: This field may be absent, depending on the buyer's privacy settings.
+
+Associations[anchor]
+
+Association Visibility Level  Permission Scope     Type                                                                 Description
+Buyer       public/private    feedback_r        User        The user who who was the buyer in this transaction. Note: This field may be absent, depending on the buyer's privacy settings.
+Seller      public/private    feedback_r        User        The user who was the seller in this transaction.
+Author      public/private    feedback_r        User        The user who wrote this feedback. Note: This field may be absent, depending on the buyer's privacy settings.
+Subject     public/private    feedback_r        User        The user who received this feedback. Note: This field may be absent, depending on the buyer's privacy settings.
+Transaction public/private    feedback_r        Transaction The transaction that this feedback pertains to.
+Listing     public/private    feedback_r        Listing     The listing that this feedback pertains to.
+
+Methods[anchor]
+
+findAllUserFeedbackAsAuthor[anchor]
+
+   Method Name     findAllUserFeedbackAsAuthor
+     Synopsis      Retrieves a set of Feedback objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/feedback/as-author
+                       Name       Required      Default              Type
+                   user_id      Y                          user_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllUserFeedbackAsBuyer[anchor]
+
+   Method Name     findAllUserFeedbackAsBuyer
+     Synopsis      Retrieves a set of Feedback objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/feedback/as-buyer
+                       Name       Required      Default              Type
+                   user_id      Y                          user_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllUserFeedbackAsSeller[anchor]
+
+   Method Name     findAllUserFeedbackAsSeller
+     Synopsis      Retrieves a set of Feedback objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/feedback/as-seller
+                       Name       Required      Default              Type
+                   user_id      Y                          user_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllUserFeedbackAsSubject[anchor]
+
+   Method Name     findAllUserFeedbackAsSubject
+     Synopsis      Retrieves a set of Feedback objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/feedback/as-subject
+                       Name       Required      Default              Type
+                   user_id      Y                          user_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllFeedbackFromBuyers[anchor]
+
+   Method Name    findAllFeedbackFromBuyers
+    Synopsis      Returns a set of FeedBack objects associated to a User. This is essentially the union between the findAllUserFeedbackAsBuyer and findAllUserFeedbackAsSubject methods.
+   HTTP Method    GET
+       URI        /users/:user_id/feedback/from-buyers
+                    Name     Required   Default          Type
+                  user_id   N                    user_id_or_name
+   Parameters     limit     N          25        int
+                  offset    N          0         int
+                  page      N                    int
+
+ Requires OAuth   N
+Permission Scope  none
+
+findAllFeedbackFromSellers[anchor]
+
+   Method Name    findAllFeedbackFromSellers
+    Synopsis      Returns a set of FeedBack objects associated to a User. This is essentially the union between the findAllUserFeedbackAsBuyer and findAllUserFeedbackAsSubject methods.
+   HTTP Method    GET
+       URI        /users/:user_id/feedback/from-sellers
+                    Name     Required   Default          Type
+                  user_id   N                    user_id_or_name
+   Parameters     limit     N          25        int
+                  offset    N          0         int
+                  page      N                    int
+
+ Requires OAuth   N
+Permission Scope  none
+

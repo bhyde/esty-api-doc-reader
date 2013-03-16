@@ -1,0 +1,64 @@
+
+FeaturedTreasury
+
+Overview[anchor]
+
+Represents a Treasury list featured on Etsy homepage.
+
+Fields[anchor]
+
+      Field        Visibility Level  Permission Scope   Type                              Description
+treasury_id        public            none              int     The numeric ID for this FeaturedTreasury.
+treasury_owner_id  public            none              int     The user ID of the FeaturedTreasury owner.
+url                public            none              string  The url to the FeaturedTreasury
+region             public            none              string  The region for which this FeaturedTreasury is active.
+active_date        public            none              float   The time this FeaturedTreasury is made active on the homepage
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllFeaturedTreasuries[anchor]
+
+    Method Name     findAllFeaturedTreasuries
+     Synopsis       Finds all FeaturedTreasuries.
+    HTTP Method     GET
+        URI         /featured_treasuries
+                     Name    Required       Default        Type
+                    limit   N          25                 int
+    Parameters      offset  N          0                  int
+                    page    N                             int
+                    region  N          __ALL_REGIONS__    region
+
+  Requires OAuth    N
+ Permission Scope   none
+
+getFeaturedTreasuryById[anchor]
+
+    Method Name     getFeaturedTreasuryById
+     Synopsis       Finds FeaturedTreasury by numeric ID.
+    HTTP Method     GET
+        URI         /featured_treasuries/:featured_treasury_id
+                              Name           Required  Default  Type
+    Parameters      featured_treasury_id     Y                  int
+
+  Requires OAuth    N
+ Permission Scope   none
+
+findAllFeaturedTreasuriesByOwner[anchor]
+
+    Method Name     findAllFeaturedTreasuriesByOwner
+     Synopsis       Finds all FeaturedTreasury by numeric owner_id.
+    HTTP Method     GET
+        URI         /featured_treasuries/owner/:owner_id
+                         Name          Required        Default      Type
+                    limit           N               25            int
+    Parameters      offset          N               0             int
+                    page            N                             int
+                    owner_id        Y                             int
+
+  Requires OAuth    N
+ Permission Scope   none
+

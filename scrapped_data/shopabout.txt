@@ -1,0 +1,38 @@
+
+ShopAbout
+
+Overview[anchor]
+
+Data about a user's shop.
+
+Fields[anchor]
+
+          Field           Visibility Level  Permission Scope       Type                                     Description
+shop_id                   public            none              int            Numeric ID of the shop section.
+status                    public            none              string         Status of this data: active or draft. Only Shop owners can see drafts.
+story_headline            public            none              string         ShopAbout headline text
+story_leading_paragraph   public            none              string         The first part of the ShopAbout story
+story                     public            none              string         The full ShopAbout story text
+related_links             public            none              array(string)  The ShopAbout related links
+
+Associations[anchor]
+
+Association  Visibility Level  Permission Scope            Type                                   Description
+Shop         public            none              Shop                     The shop this detail data belongs to
+Members      public            none              array(ShopAboutMember)   The ShopAboutMembers of this Shop
+Images       public            none              array(ShopAboutImages)   An array of images to be included with ShopAbout details
+
+Methods[anchor]
+
+getShopAbout[anchor]
+
+   Method Name     getShopAbout
+     Synopsis      Retrieves a ShopAbout object associated to a Shop.
+   HTTP Method     GET
+       URI         /shops/:shop_id/about
+                      Name      Required    Default            Type
+    Parameters     shop_id    Y                       shop_id_or_name
+
+  Requires OAuth   N
+ Permission Scope  none
+

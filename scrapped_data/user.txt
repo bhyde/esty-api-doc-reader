@@ -1,0 +1,146 @@
+
+User
+
+Overview[anchor]
+
+Represents a single user of the site.
+
+Fields[anchor]
+
+       Field         Visibility Level  Permission Scope      Type                                   Description
+user_id              public            none              int           The user's numeric ID. This is also valid as the user's shop ID.
+login_name           public            none              string        The user's login name.
+primary_email        private           email_r           string        The user's primary email address.
+creation_tsz         public            none              float         The date and time the user was created, in epoch seconds.
+referred_by_user_id  public            none              int           The numeric ID of the user that referred this user.
+feedback_info        public            none              FeedbackInfo  An associative array of feedback totals for the user.
+
+Associations[anchor]
+
+   Association     Visibility Level  Permission Scope         Type                                      Description
+Shops              public            none              array(Shop)         An array of shops that belong to the user.
+Profile            public            none              UserProfile         The user's public profile.
+Orders             private           transactions_r    array(Order)        An array of orders this user has placed.
+BuyerReceipts      private           transactions_r    array(Receipt)      An array of receipts for listings this user has purchased.
+BuyerTransactions  private           transactions_r    array(Transaction)  An array of transactions (sold listings) this user has purchased.
+Addresses          private           profile_r         array(UserAddress)  A user's Addresses.
+Charges            private           billing_r         array(BillCharge)   A user's (buyer's) Charges.
+Payments           private           billing_r         array(BillPayment)  A user's (buyer's) Payments.
+
+Methods[anchor]
+
+findAllUsers[anchor]
+
+   Method Name     findAllUsers
+     Synopsis      Finds all Users whose name or username match the keywords parameter.
+   HTTP Method     GET
+       URI         /users
+                           Name               Required            Default           Type
+                   keywords             N                                      string
+    Parameters     limit                N                    25                int
+                   offset               N                    0                 int
+                   page                 N                                      int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+getUser[anchor]
+
+    Method Name     getUser
+     Synopsis       Retrieves a User by id.
+    HTTP Method     GET
+        URI         /users/:user_id
+                      Name   Required  Default             Type
+    Parameters      user_id  Y                  array(user_id_or_name)
+
+  Requires OAuth    N
+ Permission Scope   none
+
+findAllUsersForTeam[anchor]
+
+   Method Name     findAllUsersForTeam
+     Synopsis      Returns a list of users for a specific team
+   HTTP Method     GET
+       URI         /teams/:team_id/users/
+                     Name   Required  Default                 Type
+                   team_id  Y                  int
+                   status   N         active   enum(active, invited, pending)
+    Parameters     limit    N         25       int
+                   offset   N         0        int
+                   page     N                  int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+getCirclesContainingUser[anchor]
+
+   Method Name     getCirclesContainingUser
+     Synopsis      Returns a list of users who have circled this user
+   HTTP Method     GET
+       URI         /users/:user_id/circles
+                      Name      Required    Default            Type
+                   user_id    Y                       user_id_or_name
+    Parameters     limit      N            25         int
+                   offset     N            0          int
+                   page       N                       int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+getConnectedUser[anchor]
+
+    Method Name     getConnectedUser
+     Synopsis       Returns details about a connection between users
+    HTTP Method     GET
+        URI         /users/:user_id/circles/:to_user_id
+                        Name       Required   Default          Type
+                    user_id       Y                    user_id_or_name
+                    to_user_id    Y                    user_id_or_name
+    Parameters      limit         N          25        int
+                    offset        N          0         int
+                    page          N                    int
+
+  Requires OAuth    N
+ Permission Scope   none
+
+unconnectUsers[anchor]
+
+   Method Name     unconnectUsers
+     Synopsis      Removes a user (to_user_id) from the logged in user's (user_id) circle
+   HTTP Method     DELETE
+       URI         /users/:user_id/circles/:to_user_id
+                          Name           Required        Default                Type
+    Parameters     user_id            Y                             user_id_or_name
+                   to_user_id         Y                             user_id_or_name
+
+  Requires OAuth   Y
+ Permission Scope  profile_w
+
+getConnectedUsers[anchor]
+
+   Method Name     getConnectedUsers
+     Synopsis      Returns a list of users that are in this user's cricle
+   HTTP Method     GET
+       URI         /users/:user_id/connected_users
+                      Name       Required      Default            Type
+                   user_id     Y                         user_id_or_name
+    Parameters     limit       N             25          int
+                   offset      N             0           int
+                   page        N                         int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+connectUsers[anchor]
+
+   Method Name     connectUsers
+     Synopsis      Adds user (to_user_id) to the user's (user_id) circle
+   HTTP Method     POST
+       URI         /users/:user_id/connected_users
+                        Name        Required    Default           Type
+    Parameters     user_id        Y                       user_id_or_name
+                   to_user_id     Y                       user_id_or_name
+
+  Requires OAuth   Y
+ Permission Scope  profile_w
+

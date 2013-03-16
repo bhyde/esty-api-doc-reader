@@ -1,0 +1,43 @@
+
+LedgerEntry
+
+Overview[anchor]
+
+Represents an entry in a shop's ledger.
+
+Fields[anchor]
+
+     Field      Visibility Level  Permission Scope   Type                                                         Description
+ledger_entry_id private           transactions_r    int    The ledger entry's numeric ID.
+ledger_id       private           transactions_r    int    The ledger's numeric ID.
+sequence        private           transactions_r    int    The sequence allows ledger entries to be sorted chronologically. The higher the sequence, the more recent the entry.
+credit_amount   private           transactions_r    int    The amount of money credited to the ledger.
+debit_amount    private           transactions_r    int    The amount of money debited from the ledger.
+entry_type      private           transactions_r    string Details what kind of ledger entry this is: a payment, refund, disbursement, returned disbursement, or recoupment
+reference_id    private           transactions_r    int    Depending on the entry_type, this is the id of the corresponding payment, payment adjustment, or disbursement.
+running_balance private           transactions_r    int    The amount of money in the shop's ledger the moment after this entry was applied.
+create_date     private           transactions_r    int    The date and time the ledger entry was created in Epoch seconds.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findLedgerEntries[anchor]
+
+    Method Name     findLedgerEntries
+     Synopsis       Get a Shop Payment Account Ledger's Entries
+    HTTP Method     GET
+        URI         /shops/:shop_id/ledger/entries
+                        Name      Required  Default         Type
+                    shop_id       Y                  shop_id_or_name
+                    min_created   N                  epoch
+    Parameters      max_created   N                  epoch
+                    limit         N         25       int
+                    offset        N         0        int
+                    page          N                  int
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+

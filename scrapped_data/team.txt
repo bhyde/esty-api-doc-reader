@@ -1,0 +1,63 @@
+
+Team
+
+Overview[anchor]
+
+Teams represent a community of users on Etsy, found at www.etsy.com/teams. Generally, the Etsy API only exposes public teams data. Using OAuth, a team captain may see pending or invited team members using the findAllUsersForTeam method.
+
+Fields[anchor]
+
+   Field     Visibility Level  Permission Scope       Type                                 Description
+group_id     public            none              int            The team's numeric ID.
+name         public            none              string         The team's name.
+create_date  public            none              int            The date and time the team was created in Epoch seconds.
+update_date  public            none              int            The date and time the team was last updated in Epoch seconds.
+tags         public            none              array(string)  A list of tags describing the team.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllTeams[anchor]
+
+    Method Name      findAllTeams
+      Synopsis       Returns all Teams
+    HTTP Method      GET
+        URI          /teams
+                      Name    Required   Default  Type
+                     limit   N          25        int
+     Parameters      offset  N          0         int
+                     page    N                    int
+
+   Requires OAuth    N
+  Permission Scope   none
+
+findTeams[anchor]
+
+    Method Name     findTeams
+     Synopsis       Returns specified team by ID or team name
+    HTTP Method     GET
+        URI         /teams/:team_ids/
+                      Name    Required  Default             Type
+    Parameters      team_ids  Y                  array(team_id_or_name)
+
+  Requires OAuth    N
+ Permission Scope   none
+
+findAllTeamsForUser[anchor]
+
+    Method Name     findAllTeamsForUser
+     Synopsis       Returns a list of teams for a specific user
+    HTTP Method     GET
+        URI         /users/:user_id/teams
+                      Name     Required   Default         Type
+                    user_id   Y                    user_id_or_name
+    Parameters      limit     N          25        int
+                    offset    N          0         int
+                    page      N                    int
+
+  Requires OAuth    N
+ Permission Scope   none
+

@@ -1,0 +1,35 @@
+
+SegmentPoster
+
+Overview[anchor]
+
+A Marketplace Browse Segment Poster which represents a set of Marketplace Browse Segments - These represent the curated pages that sometimes appear inside of Browse Pages, full of both links to segments below the level of the current path, and images to represent each curated sub-segment. More information is in this Etsy News Blog post.
+
+Fields[anchor]
+
+  Field    Visibility Level  Permission Scope   Type                                                   Description
+name       public            none              string The formatted name for this SegmentPoster
+path       public            none              string The sequence of slugified names leading to a Segment represented by this SegmentPoster
+image_url  public            none              string A fullxfull image representing this SegmentPoster's content
+shop_id    public            none              int    (Optional) The id of the Shop from which the image_url was chosen
+shop_name  public            none              int    (Optional) The name of the Shop from which the image_url was chosen
+weight     public            none              int    A number starting at 1 representing how prominent this SegmentPoster is relative to other SegmentPosters
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findBrowseSegmentPosters[anchor]
+
+    Method Name     findBrowseSegmentPosters
+     Synopsis       Find Browse SegmentPosters by Segment slug
+    HTTP Method     GET
+        URI         /segments/posters
+                     Name      Required        Default       Type
+    Parameters      path    N                             string
+
+  Requires OAuth    N
+ Permission Scope   none
+

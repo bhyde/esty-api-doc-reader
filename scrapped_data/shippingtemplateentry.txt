@@ -1,0 +1,115 @@
+
+ShippingTemplateEntry
+
+Overview[anchor]
+
+Represents one entry in a shipping template.
+
+ShippingTemplate, ShippingTemplateEntry, and ShippingInfo[anchor]
+
+The diagram below is an ERD of the relevant portion of the database related to Listings.  Each Listing has a User,  and each User can have 0 or more ShippingTemplates.  We are enforcing that a user create at least one ShippingTemplate before creating a listing.   When that Listing is created the ShippingTemplate gets copied into the ShippingInfo table and is associated to that Listing.  You can then edit the ShippingInfo directly for a listing,  or update your ShippingTemplate and update the Listing with it.
+
+[seller_too]
+
+  • A ShippingTemplate has a title and is owned by a user.
+  • ShippingInfo is a set of records that define shipping information for a specific listing.  They are created from a ShippingTemplate.
+  • ShippingTemplateEntries are a set of rows that correspond to this template.
+      □ They hold an origin country,  and a destination, as well as the primary and secondary cost.
+      □ There is only one origin per template,  so this is changed on the ShippingTemplate resource instead of the ShippingTemplateEntry. 
+  • You can pass a destination id or a region id when creating a ShippingTemplateEntry, but not both - If you leave them both blank then the destination is assumed to be "everywhere"
+  • If you create a  ShippingTemplateEntry with a region,  this implies several destinations and will insert a row for each destination within that region.
+  • If you delete a ShippingTemplateEntry that is a region,  it will delete all corresponding destinations for that region.
+  • You can update a ShippingTemplateEntry,  but because a region defines many rows, and different regions may have a different number of rows,  you cannot update the region.   You must first delete an entry corresponding to that region,  and then add an entry with the new region.
+
+Fields[anchor]
+
+           Field            Visibility Level  Permission Scope   Type                                                          Description
+shipping_template_entry_id  private           listings_r        int    The numeric ID of this shipping template entry.
+shipping_template_id        private           listings_r        int    The numeric ID of the template this entry belongs to.
+currency_code               private           listings_r        string The currency code for the prices in this template entry.
+origin_country_id           private           listings_r        int    The numeric ID of the country from which the listing ships.
+destination_country_id      private           listings_r        int    The numeric ID of the country to which the listing ships (optional). If missing, these fees apply to all destinations.
+destination_region_id       private           listings_r        int    The numeric ID of the region to which the listing ships (optional). Regions are collections of countries.
+primary_cost                private           listings_r        float  The shipping fee for this item, if shipped alone.
+secondary_cost              private           listings_r        float  The shipping fee for this item, if shipped with another item.
+
+Associations[anchor]
+
+    Association      Visibility Level  Permission Scope        Type                                  Description
+OriginCountry        private           listings_r        Country           The full Country record for the shipping origin.
+DestinationCountry   private           listings_r        Country           The full Country record for the shipping destination.
+DestinationRegion    private           listings_r        Region            The full Region record for the shipping destination region.
+Template             private           listings_r        ShippingTemplate  The template to which this entry belongs.
+
+Methods[anchor]
+
+findAllShippingTemplateEntries[anchor]
+
+   Method Name    findAllShippingTemplateEntries
+    Synopsis      Retrieves a set of ShippingTemplateEntry objects associated to a ShippingTemplate.
+   HTTP Method    GET
+       URI        /shipping/templates/:shipping_template_id/entries
+                                      Name                          Required          Default       Type
+                  shipping_template_id                         Y                                  int
+   Parameters     limit                                        N                  25              int
+                  offset                                       N                  0               int
+                  page                                         N                                  int
+
+ Requires OAuth   N
+Permission Scope  none
+
+createShippingTemplateEntry[anchor]
+
+    Method Name     createShippingTemplateEntry
+     Synopsis       Creates a new ShippingTemplateEntry
+    HTTP Method     POST
+        URI         /shipping/templates/entries
+                               Name            Required  Default   Type
+                    shipping_template_id       Y                  int
+                    destination_country_id     N                  int
+    Parameters      primary_cost               Y                  float
+                    secondary_cost             Y                  float
+                    destination_region_id      N                  int
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+
+getShippingTemplateEntry[anchor]
+
+   Method Name     getShippingTemplateEntry
+     Synopsis      Retrieves a ShippingTemplateEntry by id.
+   HTTP Method     GET
+       URI         /shipping/templates/entries/:shipping_template_entry_id
+                                Name              Required  Default      Type
+    Parameters     shipping_template_entry_id     Y                  array(int)
+
+  Requires OAuth   N
+ Permission Scope  listings_r
+
+updateShippingTemplateEntry[anchor]
+
+   Method Name     updateShippingTemplateEntry
+     Synopsis      Updates a ShippingTemplateEntry
+   HTTP Method     PUT
+       URI         /shipping/templates/entries/:shipping_template_entry_id
+                                 Name                 Required   Default   Type
+                   shipping_template_entry_id        Y                    int
+    Parameters     destination_country_id            N                    int
+                   primary_cost                      N                    float
+                   secondary_cost                    N                    float
+
+  Requires OAuth   Y
+ Permission Scope  listings_w
+
+deleteShippingTemplateEntry[anchor]
+
+   Method Name     deleteShippingTemplateEntry
+     Synopsis      Deletes a ShippingTemplateEntry
+   HTTP Method     DELETE
+       URI         /shipping/templates/entries/:shipping_template_entry_id
+                                  Name                 Required    Default  Type
+    Parameters     shipping_template_entry_id         Y                     int
+
+  Requires OAuth   Y
+ Permission Scope  listings_w
+

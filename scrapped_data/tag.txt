@@ -1,0 +1,46 @@
+
+Tag
+
+Overview[anchor]
+
+A user-supplied term attached to a listing.
+
+Fields[anchor]
+
+    Field     Visibility Level  Permission Scope   Type                                          Description
+tag           public            none              string The tag's short name.
+name          public            none              string The tag's display name.
+num_listings  public            none              int    The number of listings tagged with this tag.
+weight        public            none              int    Relative weight (0-100) of this tag compared to other tags in the current result set.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findPopularTags[anchor]
+
+   Method Name     findPopularTags
+     Synopsis      DEPRECATED - Retrieves all related tags for the given tag set.
+   HTTP Method     GET
+       URI         /taxonomy/tags
+                        Name             Required              Default          Type
+    Parameters     limit          N                      25                  int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllRelatedTags[anchor]
+
+   Method Name     findAllRelatedTags
+     Synopsis      DEPRECATED - Retrieves all related tags for the given tag set.
+   HTTP Method     GET
+       URI         /taxonomy/tags/:tags
+                      Name        Required        Default                Type
+    Parameters     tags       Y                               array(string)
+                   limit      N                25             int
+
+  Requires OAuth   N
+ Permission Scope  none
+

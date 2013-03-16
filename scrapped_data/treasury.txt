@@ -1,0 +1,107 @@
+
+Treasury
+
+Overview[anchor]
+
+The Treasury is an ever-changing, member-curated shopping gallery comprised of lists of items. The Etsy API allows you to retrieve, create, edit, and delete treasury lists. When retrieving multiple lists with findAllTreasuries method, you are limited to the 25,000 sortable hottest lists in the Treasury at that time. If you need to retrieve a specific list, be sure to use the getTreasury method with the corresponding treasury key.
+
+Fields[anchor]
+
+    Field      Visibility Level  Permission Scope           Type                                                           Description
+id             public            none              string                  Unique id of the collection
+title          public            none              string                  Title of the collection
+description    public            none              string                  Description of the collection
+homepage       public            none              int                     If the Treasury was featured on the homepage, the time in seconds since the epoch that it was featured
+mature         public            none              boolean                 Whether the Treasury has been flagged mature or not
+private        public            none              boolean                 Whether the Treasury has been set to private
+locale         public            none              string                  Language/Locale of the collection
+comment_count  public            none              int                     The number of comments on this Treasury
+tags           public            none              array(string)           The tags associated with this Treasury
+counts         public            none              TreasuryCounts          Clicks, views, shares, and reports metrics of this collection
+hotness        public            none              float                   The algorithmic ranking value assigned to this collection
+hotness_color  public            none              string                  The algorithmic ranking value shown as a color (color hexadecimal)
+user_id        public            none              int                     ID of the user (curator) of the collection
+user_name      public            none              string                  Name of the user (curator) of the collection
+user_avatar_id public            none              int                     ID of the user's (curator's) avatar
+listings       public            none              array(TreasuryListing)  The listings that are in this collection
+creation_tsz   public            none              float                   Time this collection was created, in epoch seconds
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllTreasuries[anchor]
+
+   Method Name     findAllTreasuries
+     Synopsis      Search Treasuries or else List all Treasuries
+   HTTP Method     GET
+       URI         /treasuries
+                       Name     Required  Default            Type
+                   keywords     N                  treasury_search_string
+                   sort_on      N         hotness  enum(hotness, created)
+    Parameters     sort_order   N         down     enum(up, down)
+                   limit        N         25       int
+                   offset       N         0        int
+                   page         N                  int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+createTreasury[anchor]
+
+    Method Name     createTreasury
+     Synopsis       Create a Treasury
+    HTTP Method     POST
+        URI         /treasuries
+                        Name      Required  Default           Type
+                    title         Y                  treasury_title
+                    description   N                  treasury_description
+    Parameters      listing_ids   Y                  array(int)
+                    tags          N                  array(string)
+                    private       N         0        boolean
+
+  Requires OAuth    Y
+ Permission Scope   treasury_w
+
+getTreasury[anchor]
+
+    Method Name     getTreasury
+     Synopsis       Get a Treasury
+    HTTP Method     GET
+        URI         /treasuries/:treasury_key
+                         Name       Required  Default      Type
+    Parameters      treasury_key   Y                   treasury_id
+
+  Requires OAuth    N
+ Permission Scope   none
+
+deleteTreasury[anchor]
+
+    Method Name      deleteTreasury
+      Synopsis       Delete a Treasury
+    HTTP Method      DELETE
+        URI          /treasuries/:treasury_key
+     Parameters      none
+   Requires OAuth    Y
+  Permission Scope   treasury_w
+
+findAllUserTreasuries[anchor]
+
+   Method Name    findAllUserTreasuries
+    Synopsis      Get a user's Treasuries. Note: The treasury_r permission scope is required in order to display private Treasuries for a user when the boolean parameter include_private is true.
+   HTTP Method    GET
+       URI        /users/:user_id/treasuries
+                         Name         Required  Default             Type
+                  user_id            Y                   user_id_or_name
+                  sort_on            N          hotness  enum(hotness, created)
+                  sort_order         N          down     enum(up, down)
+   Parameters     include_private    N          0        boolean
+                  limit              N          25       int
+                  offset             N          0        int
+                  page               N                   int
+
+ Requires OAuth   N
+Permission Scope  none
+

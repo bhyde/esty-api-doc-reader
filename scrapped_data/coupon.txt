@@ -1,0 +1,96 @@
+
+Coupon
+
+Overview[anchor]
+
+Represents a shop coupon.
+
+Fields[anchor]
+
+         Field          Visibility Level  Permission Scope   Type                                                                 Description
+coupon_id               private           shops_rw          int     The numeric ID of the coupon
+coupon_code             private           shops_rw          string  The alphanumeric coupon code
+seller_active           private           shops_rw          boolean True if the coupon is active
+pct_discount            private           shops_rw          int     The discount percent (null for free shipping coupons)
+free_shipping           private           shops_rw          boolean True if the coupon applies free shipping
+domestic_only           private           shops_rw          boolean True if the coupon free shipping applies to domestic addresses only
+currency_code           private           shops_rw          string  The 3 letter currency code relating to currency values if any. fixed_discount or minimum_purchase_price
+fixed_discount          private           shops_rw          string  Discount amount the coupon should take. For currency information see currency_code
+minimum_purchase_price  private           shops_rw          string  The minimum amount in a cart before tax or shipping needed in order to apply the coupon. For currency information see currency_code
+coupon_type             private           shops_rw          string  The type of coupon: fixed_discount, pct_discount, free_shipping for example
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findAllShopCoupons[anchor]
+
+    Method Name     findAllShopCoupons
+     Synopsis       Retrieves all Shop_Coupons by shop_id
+    HTTP Method     GET
+        URI         /shops/:shop_id/coupons
+                      Name    Required  Default         Type
+    Parameters      shop_id  Y                   shop_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+createCoupon[anchor]
+
+   Method Name     createCoupon
+     Synopsis      Creates a new Coupon. May only have one of free_shipping or pct_discount
+   HTTP Method     POST
+       URI         /shops/:shop_id/coupons
+                            Name              Required      Default               Type
+                   shop_id                 Y                           shop_id_or_name
+                   coupon_code             Y                           string
+    Parameters     pct_discount            N                           int
+                   seller_active           N              false        boolean
+                   free_shipping           N              false        boolean
+                   domestic_only           N              false        boolean
+
+  Requires OAuth   Y
+ Permission Scope  shops_rw
+
+findCoupon[anchor]
+
+    Method Name     findCoupon
+     Synopsis       Retrieves a Shop_Coupon by id and shop_id
+    HTTP Method     GET
+        URI         /shops/:shop_id/coupons/:coupon_id
+                       Name     Required  Default         Type
+    Parameters      shop_id     Y                  shop_id_or_name
+                    coupon_id   Y                  int
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+updateCoupon[anchor]
+
+    Method Name     updateCoupon
+     Synopsis       Updates a coupon
+    HTTP Method     PUT
+        URI         /shops/:shop_id/coupons/:coupon_id
+                         Name       Required  Default         Type
+                    shop_id         Y                  shop_id_or_name
+    Parameters      coupon_id       Y                  int
+                    seller_active   N         false    boolean
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+
+deleteCoupon[anchor]
+
+    Method Name     deleteCoupon
+     Synopsis       Deletes a coupon
+    HTTP Method     DELETE
+        URI         /shops/:shop_id/coupons/:coupon_id
+                       Name     Required  Default         Type
+    Parameters      shop_id     Y                  shop_id_or_name
+                    coupon_id   Y                  int
+
+  Requires OAuth    Y
+ Permission Scope   shops_rw
+

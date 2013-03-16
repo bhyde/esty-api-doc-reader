@@ -1,0 +1,51 @@
+
+Order
+
+Overview[anchor]
+
+represents a collection of listings purchased by a user on a specific date and time.
+
+Fields[anchor]
+
+    Field      Visibility Level   Permission Scope  Type                       Description
+order_id      private            transactions_r     int   The order's numeric ID.
+user_id       private            transactions_r     int   The numeric ID of the user who placed this order.
+creation_tsz  private            transactions_r     float Creation time, in epoch seconds.
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope       Type                          Description
+User         private            transactions_r     User            The user who placed this order.
+Receipts     private            transactions_r     array(Receipt)  An array of receipts associated to this order.
+
+Methods[anchor]
+
+getOrder[anchor]
+
+    Method Name     getOrder
+     Synopsis       Retrieves a Order by id.
+    HTTP Method     GET
+        URI         /orders/:order_id
+                       Name     Required  Default      Type
+    Parameters      order_id   Y                   array(int)
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+
+findAllUserOrders[anchor]
+
+   Method Name     findAllUserOrders
+     Synopsis      Retrieves a set of Order objects associated to a User.
+   HTTP Method     GET
+       URI         /users/:user_id/orders
+                         Name        Required    Default           Type
+                   user_id          Y                      user_id_or_name
+                   min_created      N                      epoch
+    Parameters     max_created      N                      epoch
+                   limit            N           25         int
+                   offset           N           0          int
+                   page             N                      int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+

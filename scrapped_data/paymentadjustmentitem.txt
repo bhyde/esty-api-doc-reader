@@ -1,0 +1,53 @@
+
+PaymentAdjustmentItem
+
+Overview[anchor]
+
+A Direct Checkout Payment may have adjustments, or refunds. These adjustments can have different items, associated with the area being refunded, like shipping, sales tax, or the item itself. Please note all monetary amounts are in USD pennies unless otherwise specified.
+
+Fields[anchor]
+
+           Field             Visibility Level  Permission Scope   Type                                         Description
+payment_adjustment_item_id   private           transactions_r    int    The payment adjustment item's numeric ID.
+payment_adjustment_id        private           transactions_r    int    The payment adjustment's numeric ID.
+adjustment_type              private           transactions_r    string A human readable string describing the area being refundedOne of: TRANS, TAX, or SHIP
+amount                       private           transactions_r    int    The total amount of the payment adjustment item.
+transaction_id               private           transactions_r    int    The numerice ID of the Credit Card Transaction
+create_date                  private           transactions_r    int    The date and time the payment adjustment item was created in Epoch seconds.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+findPaymentAdjustmentItem[anchor]
+
+   Method Name     findPaymentAdjustmentItem
+     Synopsis      Get Direct Checkout Payment Adjustment Items
+   HTTP Method     GET
+       URI         /payments/:payment_id/adjustments/:payment_adjustment_id/items
+                                  Name                   Required      Default    Type
+                   payment_id                          Y                         int
+                   payment_adjustment_id               Y                         int
+    Parameters     limit                               N             25          int
+                   offset                              N             0           int
+                   page                                N                         int
+
+  Requires OAuth   Y
+ Permission Scope  transactions_r
+
+findPaymentAdjustmentItem[anchor]
+
+   Method Name    findPaymentAdjustmentItem
+    Synopsis      Get a Direct Checkout Payment Adjustment Item
+   HTTP Method    GET
+       URI        /payments/:payment_id/adjustments/:payment_adjustment_id/items/:payment_adjustment_item_id
+                                           Name                               Required          Default       Type
+                  payment_id                                              Y                                 int
+   Parameters     payment_adjustment_id                                   Y                                 int
+                  payment_adjustment_item_id                              Y                                 int
+
+ Requires OAuth   Y
+Permission Scope  transactions_r
+

@@ -1,0 +1,102 @@
+
+Category
+
+Overview[anchor]
+
+A category
+
+Fields[anchor]
+
+      Field       Visibility Level  Permission Scope   Type                                                         Description
+category_id       public            none              int    The identifier for this category.
+name              public            none              string The programmatic name for this category.
+meta_title        public            none              string The "title" meta tag value for the category's landing page (may be null).
+meta_keywords     public            none              string The "keywords" meta tag value for the category's landing page (may be null).
+meta_description  public            none              string The "description" meta tag value for the category's landing page (may be null).
+page_description  public            none              string A short description of the category from the category' landing page (may be null).
+page_title        public            none              string The title of the category's landing page (may be null).
+category_name     public            none              string The category's string ID.
+short_name        public            none              string A short display name for the category.
+long_name         public            none              string A longer display name for the category.
+num_children      public            none              int    The number of subcategories below this one. Subcatgories append a new tag to the end of their parent's category_name.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getCategory[anchor]
+
+    Method Name     getCategory
+     Synopsis       Retrieves a top-level Category by tag.
+    HTTP Method     GET
+        URI         /categories/:tag
+                     Name     Required      Default       Type
+    Parameters      tag     Y                          string
+
+  Requires OAuth    N
+ Permission Scope   none
+
+findAllTopCategory[anchor]
+
+    Method Name     findAllTopCategory
+     Synopsis       Retrieves all top-level Categories.
+    HTTP Method     GET
+        URI         /taxonomy/categories
+    Parameters      none
+  Requires OAuth    N
+ Permission Scope   none
+
+getSubCategory[anchor]
+
+   Method Name     getSubCategory
+     Synopsis      Retrieves a second-level Category by tag and subtag.
+   HTTP Method     GET
+       URI         /categories/:tag/:subtag
+                       Name         Required          Default         Type
+    Parameters     tag          Y                                 string
+                   subtag       Y                                 string
+
+  Requires OAuth   N
+ Permission Scope  none
+
+getSubSubCategory[anchor]
+
+   Method Name     getSubSubCategory
+     Synopsis      Retrieves a third-level Category by tag, subtag and subsubtag.
+   HTTP Method     GET
+       URI         /categories/:tag/:subtag/:subsubtag
+                           Name              Required          Default         Type
+                   tag                  Y                                  string
+    Parameters     subtag               Y                                  string
+                   subsubtag            Y                                  string
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllTopCategoryChildren[anchor]
+
+   Method Name     findAllTopCategoryChildren
+     Synopsis      Retrieves children of a top-level Category by tag.
+   HTTP Method     GET
+       URI         /taxonomy/categories/:tag
+                     Name        Required          Default         Type
+    Parameters     tag       Y                                 string
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllSubCategoryChildren[anchor]
+
+   Method Name     findAllSubCategoryChildren
+     Synopsis      Retrieves children of a second-level Category by tag and subtag.
+   HTTP Method     GET
+       URI         /taxonomy/categories/:tag/:subtag
+                        Name             Required            Default            Type
+    Parameters     tag             Y                                       string
+                   subtag          Y                                       string
+
+  Requires OAuth   N
+ Permission Scope  none
+

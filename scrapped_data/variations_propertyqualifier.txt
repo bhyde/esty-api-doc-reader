@@ -1,0 +1,24 @@
+
+Variations_PropertyQualifier
+
+Overview[anchor]
+
+A component of the larger Variations_PropertySet data structure, a property qualifier is a recursive data structure describing increasing specificity of a property. For example, for a listing in the Clothing: Pants category, the Size property is further qualified by the Recipient and Scale qualifying properties. A property qualifier describes these dependencies.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+   Field     Visibility Level  Permission Scope                   Type                                                   Description
+property_id  public            none              int                                     The numeric ID of this property
+options      public            none              array(int)                              An array of numeric IDs of available options for this property qualifier
+results      public            none              map(int,Variations_PropertyQualifier)   Recursive qualifiers representative of inreased property specificity
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

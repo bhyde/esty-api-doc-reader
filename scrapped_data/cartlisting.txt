@@ -1,0 +1,26 @@
+
+CartListing
+
+Overview[anchor]
+
+Represents the purchase quantity and state for a cart listing.
+
+Fields[anchor]
+
+          Field           Visibility Level Permission Scope                Type                                                                                             Description
+listing_id                private          cart_rw          int                                 The numeric ID of the listing
+purchase_quantity         private          cart_rw          int                                 The quantity of the listing being purchased
+purchase_state            private          cart_rw          string                              The purchase state of the listing, possible values: valid, invalid_quantity, invalid_shipping, not_active, edited, invalid_currency, invalid_shipping_currency
+listing_customization_id  private          cart_rw          int                                 When Variations are present on a listing, this can be used to differentiate multiple instances of the same listing. (NOTE: this is a beta feature.)
+variations_available      private          cart_rw          boolean                             Whether Variations are available for this listing. (NOTE: this is a beta feature.)
+has_variations            private          cart_rw          boolean                             Whether the buyer selected Variations for this listing. (NOTE: this is a beta feature.)
+selected_variations       private          cart_rw          array(Variations_SelectedProperty)  An array of selected Variations for this listing. (NOTE: this is a beta feature.)
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

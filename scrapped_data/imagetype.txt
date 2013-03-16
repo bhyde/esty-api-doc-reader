@@ -1,0 +1,30 @@
+
+ImageType
+
+Overview[anchor]
+
+Describes the available image types.
+
+Fields[anchor]
+
+Field  Visibility Level   Permission Scope       Type                        Description
+code  public             none               string         Code for this image type, used in image URLs
+desc  public             none               string         Text description of the image type
+sizes public             none               array(string)  Available sizes for this image type
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+listImageTypes[anchor]
+
+   Method Name     listImageTypes
+     Synopsis      Lists available image types along with their supported sizes.
+   HTTP Method     GET
+       URI         /image_types
+    Parameters     none
+  Requires OAuth   N
+ Permission Scope  none
+

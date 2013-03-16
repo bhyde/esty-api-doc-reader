@@ -1,0 +1,466 @@
+
+Listing
+
+Overview[anchor]
+
+Listings on Etsy are items for sale. Each Listing is associated with a User, and with a Shop (Users own Shops.) Etsy Listings have a creation date, and are valid for approximately four months. Listings have a price and a quantity, and when they're sold out, the User must renew them before they can be sold again.
+
+Listing States[anchor]
+
+The state field of Listings indicates whether a Listing is currently available for display on Etsy. Most of the time, you will only see Listings in the "active" state, but the following states may rarely appear:
+
+   State     Can Edit Can Renew                                                                                                                                                                     Meaning
+active       Yes      Yes       The Listing is currently for sale.
+removed      No       No        The Listing has been removed by its owner.
+sold_out     Yes*     Yes       The Listing has sold out. *Sold out listings can be edited, but active=true will only be honored if renew=true is aso passed. Users will be billed for this action. Otherwise, the listing will remain in the expired state. Note that when editing a sold out listing, you will need to update the quantity to a value greater than zero.
+expired      Yes**    Yes       The Listing has expired. **Expired listings can be edited, but active=true will only be honored if renew=true is also passed. Users will be billed for this action. Otherwise, the listing will remain in the expired state.
+alchemy      No       No        Deprecated; please ignore.
+edit         No       No        The Listing is inactive. (For legacy reasons, this displays as "edit".)
+draft        No       No        Draft listings are listings that have been saved prior to their first activation. The API can create draft listings, and also make draft listings active, but note that a listing in any other state cannot be moved to draft, nor can a draft listing be moved to any state other than active.
+create       No       No        Deprecated. The Listing is currently being edited by the owner (as part of the initial Listing creation.)
+private      No       No        The owner of the Listing has requested that it not appear in API results.
+unavailable  No       No        The Listing has been removed by Etsy admin for unspecified reasons.
+
+Searching Listings[anchor]
+
+By default, the method findAllListingActive returns all active Listings on Etsy, paginated by date. Use the optional parameters (such as keyword, min_price, etc.) to narrow these results. The sort_order and sort_on parameters can be used to change the order of returned results. Note that these parameters are only available when using sort options. Without sort options, they will be ignored (and Listings will be returned newest-first.)
+
+To search within a shop, use findAllShopListingsActive.
+
+Editing Listings and Bill Charges[anchor]
+
+Listings may be edited with the updateListing method. Note that the Etsy API will attempt to activate a Listing after every edit operation. This may result in charges to the user's Etsy bill. To edit an inactive Listing without activating it, pass the optional parameter state=inactive. Note that edit options that increase the quantity of a Listing will result in charges to the owner. It is the developer's responsibility to warn the user that such charges may occur.
+
+To renew a Listing for another four months, pass the optional parameter renew=true. A Listing does not need to be expired to be renewed, however note that each renewal does not take the Listing's previous expiration date into account, so any unused time remaining on the Listing's old expiration date will be lost. Renewals will result in charges to a user's bill.
+
+Translations[anchor]
+
+Data of some models in the API can be expressed in multiple languages. For example, a Listing's title and description can be translated into German or French. To access this data in the API you can use the language parameter. Like this /listings/12345?language=de. For more information about this look at Working with Translations.
+
+Categories and Tags[anchor]
+
+Categories are no longer the first three tags of a Listing. Category is a first-class resource, with its own primary key ID. When calling createListing, you must pass a category_id to specify the category for the Listing.
+
+Marketplace Attributes[anchor]
+
+The fields who_made, when_made and is_supply are the so-called Marketplace Attributes that help buyers locate a Listing under the headings Handmade, Vintage and Supplies. When creating new Listings, these parameters are required. As of this writing, not all Listings on Etsy have their Marketplace Attributes set. These Listings will return null in these fields.
+
+Fields[anchor]
+
+        Field         Visibility Level Permission Scope                                                                                                                                                                                                     Type                                                                                                                                                                                                                                                                 Description
+listing_id            public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The listing's numeric ID.
+state                 public           none             string                                                                                                                                                                                                                                                                                                                                                                                                       One of active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.
+user_id               public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The numeric ID of the user who posted the item.
+category_id           public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The numeric ID of the listing's category.
+title                 public           none             string                                                                                                                                                                                                                                                                                                                                                                                                       The listing's title.
+description           public           none             string                                                                                                                                                                                                                                                                                                                                                                                                       A description of the item.
+creation_tsz          public           none             float                                                                                                                                                                                                                                                                                                                                                                                                        Creation time, in epoch seconds.
+ending_tsz            public           none             float                                                                                                                                                                                                                                                                                                                                                                                                        The listing's expiration date and time, in epoch seconds.
+original_creation_tsz public           none             float                                                                                                                                                                                                                                                                                                                                                                                                        The date and time the listing was originally posted, in epoch seconds.
+last_modified_tsz     public           none             float                                                                                                                                                                                                                                                                                                                                                                                                        The date and time the listing was updated, in epoch seconds.
+price                 public           none             string                                                                                                                                                                                                                                                                                                                                                                                                       The item's price (will be treated as private for sold listings).
+currency_code         public           none             string                                                                                                                                                                                                                                                                                                                                                                                                       The ISO (alphabetic) code for the item's currency.
+quantity              public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The quantity of this item available for sale.
+tags                  public           none             array(string)                                                                                                                                                                                                                                                                                                                                                                                                A list of tags for the item.
+category_path         public           none             array(string)                                                                                                                                                                                                                                                                                                                                                                                                Name of the category of the item and the names of categories in that hierarchy.
+category_path_ids     public           none             array(int)                                                                                                                                                                                                                                                                                                                                                                                                   The numeric ID of each category in the this Listing's category hierarchy.
+materials             public           none             array(string)                                                                                                                                                                                                                                                                                                                                                                                                A list of materials used in the item.
+shop_section_id       public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The numeric ID of the shop section for this listing, can be null
+featured_rank         public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          Search relevancy score (only when sorting a search on "score").
+state_tsz             public           none             float                                                                                                                                                                                                                                                                                                                                                                                                        The time at which the listing last changed state.
+url                   public           none             string                                                                                                                                                                                                                                                                                                                                                                                                       The full URL to the listing's page on Etsy.
+views                 public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The number of times the listing has been viewed on Etsy.com (does not include API views).
+num_favorers          public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The number of members who've marked this Listing as a favorite
+shipping_template_id  public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The numeric ID of the shipping template associated with the listing (write only).
+shipping_profile_id   public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          Deprecated.
+processing_min        public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The minimum number of days for processing for this listing.
+processing_max        public           none             int                                                                                                                                                                                                                                                                                                                                                                                                          The maximum number of days for processing for this listing.
+who_made              public           none             enum(i_did, collective, someone_else)                                                                                                                                                                                                                                                                                                                                                                        Who made the item being listed.
+is_supply             public           none             boolean                                                                                                                                                                                                                                                                                                                                                                                                      True if the listing is a supply.
+when_made             public           none             enum(made_to_order, 2010_2013, 2000_2009, 1994_1999, before_1994, 1990_1993, 1980s, 1970s, 1960s, 1950s, 1940s, 1930s, 1920s, 1910s, 1900s, 1800s, 1700s, before_1700)                                                                                                                                                                                                                                       When was the item made.
+recipient             public           none             enum(men, women, unisex_adults, teen_boys, teen_girls, teens, boys, girls, children, baby_boys, baby_girls, babies, birds, cats, dogs, pets)                                                                                                                                                                                                                                                                 Who is this listing for.
+occasion              public           none             enum(anniversary, baptism, bar_or_bat_mitzvah, birthday, canada_day, chinese_new_year, cinco_de_mayo, confirmation, christmas, day_of_the_dead, easter, eid, engagement, fathers_day, get_well, graduation, halloween, hanukkah, housewarming, kwanza, prom, july_4th, mothers_day, new_baby, new_years, quinceanera, retirement, st_patricks_day, sweet_16, sympathy, thanksgiving, valentines, wedding)    What is the occasion for this listing.
+style                 public           none             array(string)                                                                                                                                                                                                                                                                                                                                                                                                Style of this listing. Each style is a free-form text string such as "Formal", or "Steampunk". A Listing may have up to two styles.
+non_taxable           public           none             boolean                                                                                                                                                                                                                                                                                                                                                                                                      If this flag is true, any applicable shop tax rates will not be applied to this listing on checkout.
+has_variations        public           none             boolean                                                                                                                                                                                                                                                                                                                                                                                                      True if variations are available for this Listing. (NOTE: This is a beta feature.)
+
+Associations[anchor]
+
+Association  Visibility Level  Permission Scope             Type                                                                                Description
+User         public            none              User                        The user who posted the listing.
+Shop         public            none              Shop                        The shop to which the listing belongs.
+Section      public            none              ShopSection                 The shop section to which the listing belongs.
+Images       public            none              array(ListingImage)         An array of images for the listing.
+MainImage    public            none              ListingImage                The main image associated with this Listing
+ShippingInfo public            none              array(ShippingInfo)         An array of destinations and shipping prices for this listing.
+PaymentInfo  public            none              array(PaymentTemplate)      An array of accepted payment methods for this listing.
+Translations public            none              array(ListingTranslation)   An array of translations for this Listing.
+Variations   public            none              array(Variations_Property)  An array of variations for this Listing. (NOTE: This is a beta feature, and can only be used with the getListing and getTransaction methods.)
+
+Methods[anchor]
+
+createListing[anchor]
+
+  Method Name    createListing
+    Synopsis     Creates a new Listing. NOTE: A shipping_template_id is required when creating a listing. NOTE: All listings created on www.etsy.com must be actual items for sale. Creating active test or otherwise unreal listings may lead to your shop being frozen. Please use the API Sandbox for all test listing creation.
+  HTTP Method    POST
+      URI        /listings
+                         Name         Required Default                                                                                                                                                                                                   Type
+                 quantity             Y                int
+                 title                Y                string
+                 description          Y                text
+                 price                Y                float
+                 materials            N                array(string)
+                 shipping_template_id N                int
+                 shop_section_id      N                int
+                 image_ids            N                array(int)
+                 non_taxable          N                boolean
+                 image                N                image
+   Parameters    state                N        active  enum(active, draft)
+                 processing_min       N                int
+                 processing_max       N                int
+                 category_id          Y                int
+                 tags                 N                array(string)
+                 who_made             Y                enum(i_did, collective, someone_else)
+                 is_supply            Y                boolean
+                 when_made            Y                enum(made_to_order, 2010_2013, 2000_2009, 1994_1999, before_1994, 1990_1993, 1980s, 1970s, 1960s, 1950s, 1940s, 1930s, 1920s, 1910s, 1900s, 1800s, 1700s, before_1700)
+                 recipient            N                enum(men, women, unisex_adults, teen_boys, teen_girls, teens, boys, girls, children, baby_boys, baby_girls, babies, birds, cats, dogs, pets)
+                 occasion             N                enum(anniversary, baptism, bar_or_bat_mitzvah, birthday, canada_day, chinese_new_year, cinco_de_mayo, confirmation, christmas, day_of_the_dead, easter, eid, engagement, fathers_day, get_well, graduation, halloween, hanukkah, housewarming, kwanza, prom, july_4th, mothers_day, new_baby, new_years, quinceanera, retirement, st_patricks_day, sweet_16, sympathy, thanksgiving, valentines, wedding)
+                 style                N                array(string)
+
+ Requires OAuth  Y
+Permission Scope listings_w
+
+findAllFeaturedListings[anchor]
+
+    Method Name     findAllFeaturedListings
+     Synopsis       Finds all FeaturedTreasury listings.
+    HTTP Method     GET
+        URI         /featured_treasuries/listings
+                     Name    Required       Default        Type
+                    limit   N          25                 int
+    Parameters      offset  N          0                  int
+                    page    N                             int
+                    region  N          __ALL_REGIONS__    region
+
+  Requires OAuth    N
+ Permission Scope   none
+
+getListing[anchor]
+
+    Method Name     getListing
+     Synopsis       Retrieves a Listing by id.
+    HTTP Method     GET
+        URI         /listings/:listing_id
+                        Name      Required  Default      Type
+    Parameters      listing_id   Y                   array(int)
+
+  Requires OAuth    N
+ Permission Scope   none
+
+updateListing[anchor]
+
+  Method Name    updateListing
+    Synopsis     Updates a Listing
+  HTTP Method    PUT
+      URI        /listings/:listing_id
+                         Name         Required Default                                                                                                                                                                                                   Type
+                 listing_id           Y                int
+                 quantity             N                int
+                 title                N                string
+                 description          N                text
+                 price                N                float
+                 materials            N                array(string)
+                 renew                N                boolean
+                 shipping_template_id N                int
+                 shop_section_id      N                int
+                 state                N        active  enum(active, inactive, draft)
+   Parameters    image_ids            N                array(int)
+                 non_taxable          N                boolean
+                 category_id          N                int
+                 tags                 N                array(string)
+                 who_made             N                enum(i_did, collective, someone_else)
+                 is_supply            N                boolean
+                 when_made            N                enum(made_to_order, 2010_2013, 2000_2009, 1994_1999, before_1994, 1990_1993, 1980s, 1970s, 1960s, 1950s, 1940s, 1930s, 1920s, 1910s, 1900s, 1800s, 1700s, before_1700)
+                 recipient            N                enum(men, women, unisex_adults, teen_boys, teen_girls, teens, boys, girls, children, baby_boys, baby_girls, babies, birds, cats, dogs, pets)
+                 occasion             N                enum(anniversary, baptism, bar_or_bat_mitzvah, birthday, canada_day, chinese_new_year, cinco_de_mayo, confirmation, christmas, day_of_the_dead, easter, eid, engagement, fathers_day, get_well, graduation, halloween, hanukkah, housewarming, kwanza, prom, july_4th, mothers_day, new_baby, new_years, quinceanera, retirement, st_patricks_day, sweet_16, sympathy, thanksgiving, valentines, wedding)
+                 style                N                array(string)
+                 processing_min       N                int
+                 processing_max       N                int
+
+ Requires OAuth  Y
+Permission Scope listings_w
+
+deleteListing[anchor]
+
+    Method Name     deleteListing
+     Synopsis       Deletes a Listing
+    HTTP Method     DELETE
+        URI         /listings/:listing_id
+                        Name      Required   Default  Type
+    Parameters      listing_id   Y                    int
+
+  Requires OAuth    Y
+ Permission Scope   listings_d
+
+findAllListingActive[anchor]
+
+   Method Name    findAllListingActive
+    Synopsis      Finds all active Listings. (Note: the sort_on and sort_order options only work when combined with one of the search options: keywords, color, tags, location, etc.)
+   HTTP Method    GET
+       URI        /listings/active
+                          Name          Required  Default               Type
+                  limit                 N         25       int
+                  offset                N         0        int
+                  page                  N                  int
+                  keywords              N                  text
+                  sort_on               N         created  enum(created, price, score)
+                  sort_order            N         down     enum(up, down)
+                  min_price             N                  float
+                  max_price             N                  float
+   Parameters     color                 N                  color_triplet
+                  color_accuracy        N         0        color_wiggle
+                  tags                  N                  array(string)
+                  category              N                  category
+                  location              N                  string
+                  lat                   N                  latitude
+                  lon                   N                  longitude
+                  geo_level             N         city     enum(city, state, country)
+                  accepts_gift_cards    N         false    boolean
+
+ Requires OAuth   N
+Permission Scope  none
+
+findBrowseSegmentListings[anchor]
+
+   Method Name     findBrowseSegmentListings
+     Synopsis      Find Listings for a Segment by Segment path
+   HTTP Method     GET
+       URI         /segments/listings
+                           Name         Required  Default               Type
+                   path                 Y                  string
+                   limit                N         25       int
+                   offset               N         0        int
+                   page                 N                  int
+                   keywords             N                  text
+                   sort_on              N         created  enum(created, price, score)
+    Parameters     sort_order           N         down     enum(up, down)
+                   min_price            N                  float
+                   max_price            N                  float
+                   location             N                  string
+                   lat                  N                  latitude
+                   lon                  N                  longitude
+                   geo_level            N         city     enum(city, state, country)
+                   accepts_gift_cards   N         false    boolean
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllListingsForFeaturedTreasuryId[anchor]
+
+   Method Name     findAllListingsForFeaturedTreasuryId
+     Synopsis      Finds all listings for a certain FeaturedTreasury.
+   HTTP Method     GET
+       URI         /featured_treasuries/:featured_treasury_id/listings
+                               Name              Required    Default    Type
+    Parameters     featured_treasury_id         Y                      int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllActiveListingsForFeaturedTreasuryId[anchor]
+
+   Method Name     findAllActiveListingsForFeaturedTreasuryId
+     Synopsis      Finds all active listings for a certain FeaturedTreasury.
+   HTTP Method     GET
+       URI         /featured_treasuries/:featured_treasury_id/listings/active
+                                 Name                 Required      Default    Type
+    Parameters     featured_treasury_id             Y                         int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllCurrentFeaturedListings[anchor]
+
+   Method Name    findAllCurrentFeaturedListings
+    Synopsis      Finds FeaturedTreasury listings that are currently displayed on a regional homepage.
+   HTTP Method    GET
+       URI        /featured_treasuries/listings/homepage_current
+                          Name                  Required                  Default                 Type
+   Parameters     region               N                          US                      region
+
+ Requires OAuth   N
+Permission Scope  none
+
+findAllReceiptListings[anchor]
+
+    Method Name     findAllReceiptListings
+     Synopsis       Finds all listings in a receipt
+    HTTP Method     GET
+        URI         /receipts/:receipt_id/listings
+                        Name      Required   Default  Type
+                    limit        N          25        int
+    Parameters      offset       N          0         int
+                    page         N                    int
+                    receipt_id   Y                    int
+
+  Requires OAuth    Y
+ Permission Scope   transactions_r
+
+findAllShopListingsActive[anchor]
+
+   Method Name     findAllShopListingsActive
+     Synopsis      Finds all active Listings associated with a Shop.
+   HTTP Method     GET
+       URI         /shops/:shop_id/listings/active
+                         Name       Required  Default               Type
+                   limit            N         25       int
+                   offset           N         0        int
+                   page             N                  int
+                   shop_id          Y                  shop_id_or_name
+                   keywords         N                  string
+                   sort_on          N         created  enum(created, price, score)
+    Parameters     sort_order       N         down     enum(up, down)
+                   min_price        N                  float
+                   max_price        N                  float
+                   color            N                  color_triplet
+                   color_accuracy   N         0        color_wiggle
+                   tags             N                  array(string)
+                   category         N                  category
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllShopListingsDraft[anchor]
+
+    Method Name     findAllShopListingsDraft
+     Synopsis       Finds all of a Shop's draft listings
+    HTTP Method     GET
+        URI         /shops/:shop_id/listings/draft
+                      Name    Required  Default         Type
+                    shop_id  Y                   shop_id_or_name
+    Parameters      limit    N          25       int
+                    offset   N          0        int
+                    page     N                   int
+
+  Requires OAuth    Y
+ Permission Scope   listings_r
+
+findAllShopListingsExpired[anchor]
+
+   Method Name     findAllShopListingsExpired
+     Synopsis      Retrieves Listings associated to a Shop that are expired
+   HTTP Method     GET
+       URI         /shops/:shop_id/listings/expired
+                       Name       Required      Default              Type
+                   shop_id      Y                          shop_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   Y
+ Permission Scope  listings_r
+
+getShopListingExpired[anchor]
+
+   Method Name     getShopListingExpired
+     Synopsis      Retrieves a Listing associated to a Shop that is inactive
+   HTTP Method     GET
+       URI         /shops/:shop_id/listings/expired/:listing_id
+                        Name         Required     Default            Type
+    Parameters     shop_id         Y                        shop_id_or_name
+                   listing_id      Y                        int
+
+  Requires OAuth   Y
+ Permission Scope  listings_r
+
+findAllShopListingsFeatured[anchor]
+
+   Method Name     findAllShopListingsFeatured
+     Synopsis      Retrieves Listings associated to a Shop that are featured
+   HTTP Method     GET
+       URI         /shops/:shop_id/listings/featured
+                       Name       Required      Default              Type
+                   shop_id      Y                          shop_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllShopListingsInactive[anchor]
+
+   Method Name     findAllShopListingsInactive
+     Synopsis      Retrieves Listings associated to a Shop that are inactive
+   HTTP Method     GET
+       URI         /shops/:shop_id/listings/inactive
+                       Name       Required      Default              Type
+                   shop_id      Y                          shop_id_or_name
+    Parameters     limit        N             25           int
+                   offset       N             0            int
+                   page         N                          int
+
+  Requires OAuth   Y
+ Permission Scope  listings_r
+
+getShopListingInactive[anchor]
+
+   Method Name     getShopListingInactive
+     Synopsis      Retrieves a Listing associated to a Shop that is inactive
+   HTTP Method     GET
+       URI         /shops/:shop_id/listings/inactive/:listing_id
+                        Name         Required     Default            Type
+    Parameters     shop_id         Y                        shop_id_or_name
+                   listing_id      Y                        int
+
+  Requires OAuth   Y
+ Permission Scope  listings_r
+
+findAllShopSectionListings[anchor]
+
+   Method Name     findAllShopSectionListings
+     Synopsis      Finds all listings within a shop section
+   HTTP Method     GET
+       URI         /shops/:shop_id/sections/:shop_section_id/listings
+                          Name         Required  Default         Type
+                   limit              N          25       int
+                   offset             N          0        int
+    Parameters     page               N                   int
+                   shop_id            Y                   shop_id_or_name
+                   shop_section_id    Y                   int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllShopSectionListingsActive[anchor]
+
+   Method Name     findAllShopSectionListingsActive
+     Synopsis      Finds all listings within a shop section
+   HTTP Method     GET
+       URI         /shops/:shop_id/sections/:shop_section_id/listings/active
+                          Name         Required   Default            Type
+                   limit              N          25        int
+                   offset             N          0         int
+                   page               N                    int
+    Parameters     shop_id            Y                    shop_id_or_name
+                   shop_section_id    Y                    array(int)
+                   sort_on            N          created   enum(created, price)
+                   sort_order         N          down      enum(up, down)
+
+  Requires OAuth   N
+ Permission Scope  none
+
+findAllCartListings[anchor]
+
+    Method Name     findAllCartListings
+     Synopsis       Finds all listings in a given Cart
+    HTTP Method     GET
+        URI         /users/:user_id/carts/:cart_id/listings
+                      Name    Required  Default         Type
+    Parameters      user_id  Y                   user_id_or_name
+                    cart_id  Y                   cart_id
+
+  Requires OAuth    Y
+ Permission Scope   cart_rw
+

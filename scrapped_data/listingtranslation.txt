@@ -1,0 +1,74 @@
+
+ListingTranslation
+
+Overview[anchor]
+
+Represents the translation data for a Listing.
+
+Fields[anchor]
+
+   Field     Visibility Level  Permission Scope       Type                                      Description
+listing_id   public            none              int            The numeric ID for the Listing.
+language     public            none              language       The IETF language tag (e.g. 'fr') for the language of this translation.
+title        public            none              string         The title of the Listing of this Translation.
+description  public            none              string         The description of the Listing of this Translation.
+tags         public            none              array(string)  The description of the Listing of this Translation.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getListingTranslation[anchor]
+
+   Method Name     getListingTranslation
+     Synopsis      Retrieves a ListingTranslation by listing_id and language
+   HTTP Method     GET
+       URI         /listings/:listing_id/translations/:language
+                          Name           Required        Default         Type
+    Parameters     listing_id         Y                             int
+                   language           Y                             language
+
+  Requires OAuth   N
+ Permission Scope  none
+
+createListingTranslation[anchor]
+
+   Method Name     createListingTranslation
+     Synopsis      Creates a ListingTranslation by listing_id and language
+   HTTP Method     POST
+       URI         /listings/:listing_id/translations/:language
+                          Name           Required       Default         Type
+    Parameters     listing_id         Y                            int
+                   language           Y                            language
+
+  Requires OAuth   Y
+ Permission Scope  listings_w
+
+updateListingTranslation[anchor]
+
+   Method Name     updateListingTranslation
+     Synopsis      Updates a ListingTranslation by listing_id and language
+   HTTP Method     PUT
+       URI         /listings/:listing_id/translations/:language
+                          Name           Required       Default         Type
+    Parameters     listing_id         Y                            int
+                   language           Y                            language
+
+  Requires OAuth   Y
+ Permission Scope  listings_w
+
+deleteListingTranslation[anchor]
+
+   Method Name     deleteListingTranslation
+     Synopsis      Deletes a ListingTranslation by listing_id and language
+   HTTP Method     DELETE
+       URI         /listings/:listing_id/translations/:language
+                          Name           Required       Default         Type
+    Parameters     listing_id         Y                            int
+                   language           Y                            language
+
+  Requires OAuth   Y
+ Permission Scope  listings_d
+

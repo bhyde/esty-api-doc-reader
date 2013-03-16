@@ -1,0 +1,32 @@
+
+Variations_PropertySetProperty
+
+Overview[anchor]
+
+Represents a suggested Variations property as part of a set of suggested properties and options, dependent on one or more qualifiers (size scale, recipient, etc.) For more information, see Variations_PropertySet.
+
+Although Etsy listings can contain any value for any available property, it's recommended to use these suggested properties whenever possible. They may be integrated into Etsy search at a later date.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+     Field      Visibility Level  Permission Scope   Type                                        Description
+property_id     public            none              int    This numeric ID of this property
+name            public            none              string The name of this property
+input_name      public            none              string Suggested form field name
+label           public            none              string Descriptive text label for form input
+param           public            none              string Specifies the qualifier parameter when requesting suggested options for a property
+default_option  public            none              string Initial option value for form input
+description     public            none              string Text description of property
+is_custom       public            none              string True if this property is Custom 1 or Custom 2
+title           public            none              string Property name, formatted for display
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

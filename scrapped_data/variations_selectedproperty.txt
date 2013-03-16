@@ -1,0 +1,28 @@
+
+Variations_SelectedProperty
+
+Overview[anchor]
+
+A data structure representing a buyer's selected variation for a listing. Returned as a collection as a property on CartListing and Transaction.
+
+When in the context of a CartListing, special attention should be paid to the is_valid property. This will be false in the event that the variation has been changed or removed since the listing was added to the cart. Additionally, the purchase_state property of the parent CartListing will have a value of edited to signal this state. In this case the listing needs to be removed and re-added to the cart with a valid variation.
+
+NOTE: Support for Listing Variations is a beta feature. For full documentation on working with Listing Variations, see Working with Variations.
+
+Fields[anchor]
+
+     Field      Visibility Level  Permission Scope   Type                                                                Description
+property_id     public            none              int     The numeric ID of the selected property
+value_id        public            none              int     The numeric ID of selected value
+formatted_name  public            none              string  The formatted/translated name of the selected property
+formatted_value public            none              string  The formatted/translated name of the selected value
+is_valid        public            none              boolean Whether the selected variation value is a valid option for this property. NOTE: This field will not be present on Transactions.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

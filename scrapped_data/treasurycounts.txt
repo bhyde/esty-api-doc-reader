@@ -1,0 +1,23 @@
+
+TreasuryCounts
+
+Overview[anchor]
+
+Various metrics on the Treasury
+
+Fields[anchor]
+
+ Field    Visibility Level   Permission Scope  Type                        Description
+clicks   public             none               int  The number of times the Treasury has been clicked on
+views    public             none               int  The number of times the Treasury has been viewed
+shares   public             none               int  The number of times the Treasury has been shared
+reports  public             none               int  The number of times the Treasury has been reported
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

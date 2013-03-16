@@ -1,0 +1,120 @@
+
+ShippingInfo
+
+Overview[anchor]
+
+Shipping fees for a listing and a specific destination.
+
+ShippingTemplate, ShippingTemplateEntry, and ShippingInfo[anchor]
+
+The diagram below is an ERD of the relevant portion of the database related to Listings.  Each Listing has a User,  and each User can have 0 or more ShippingTemplates.  We are enforcing that a user create at least one ShippingTemplate before creating a listing.   When that Listing is created the ShippingTemplate gets copied into the ShippingInfo table and is associated to that Listing.  You can then edit the ShippingInfo directly for a listing,  or update your ShippingTemplate and update the Listing with it.
+
+[seller_too]
+
+  • A ShippingTemplate has a title and is owned by a user.
+  • ShippingInfo is a set of records that define shipping information for a specific listing.  They are created from a ShippingTemplate.
+  • ShippingTemplateEntries are a set of rows that correspond to this template.
+      □ They hold an origin country,  and a destination, as well as the primary and secondary cost.
+      □ There is only one origin per template,  so this is changed on the ShippingTemplate resource instead of the ShippingTemplateEntry. 
+  • You can pass a destination id or a region id when creating a ShippingTemplateEntry, but not both - If you leave them both blank then the destination is assumed to be "everywhere"
+  • If you create a  ShippingTemplateEntry with a region,  this implies several destinations and will insert a row for each destination within that region.
+  • If you delete a ShippingTemplateEntry that is a region,  it will delete all corresponding destinations for that region.
+  • You can update a ShippingTemplateEntry,  but because a region defines many rows, and different regions may have a different number of rows,  you cannot update the region.   You must first delete an entry corresponding to that region,  and then add an entry with the new region.
+
+Fields[anchor]
+
+          Field           Visibility Level Permission Scope  Type                                                                                   Description
+shipping_info_id          public           none             int    The numeric ID of this shipping info record.
+origin_country_id         public           none             int    The numeric ID of the country from which the listing ships.
+destination_country_id    public           none             int    The numeric ID of the country to which the listing ships (optional). If missing, these fees apply to all destinations.
+currency_code             public           none             string Identifies the currency unit for shipping fees (currently, always 'USD').
+primary_cost              public           none             float  The shipping fee for this item, if shipped alone.
+secondary_cost            public           none             float  The shipping fee for this item, if shipped with another item.
+listing_id                public           none             int    The numeric ID of the listing to which this shipping info applies.
+region_id                 public           none             int    The numeric ID of the region to which this shipping info applies (optional). If missing, no region is selected. Regions are shorthand for lists of individual countries.
+origin_country_name       public           none             string The name of the country from which this item ships.
+destination_country_name  public           none             string The name of the country to which this item ships.
+
+Associations[anchor]
+
+    Association     Visibility Level  Permission Scope    Type                             Description
+DestinationCountry  public            none              Country  The full Country record for the shipping destination.
+OriginCountry       public            none              Country  The full Country record for the shipping origin.
+Region              public            none              Region   The full Region record for the shipping destination region.
+
+Methods[anchor]
+
+findAllListingShippingInfoAssoc[anchor]
+
+   Method Name     findAllListingShippingInfoAssoc
+     Synopsis      Retrieves a set of ShippingInfo objects associated to a Listing.
+   HTTP Method     GET
+       URI         /listings/:listing_id/shipping/info
+                             Name                Required           Default        Type
+                   listing_id               Y                                    int
+    Parameters     limit                    N                   25               int
+                   offset                   N                   0                int
+                   page                     N                                    int
+
+  Requires OAuth   N
+ Permission Scope  none
+
+createShippingInfo[anchor]
+
+    Method Name     createShippingInfo
+     Synopsis       Creates a new ShippingInfo.
+    HTTP Method     POST
+        URI         /listings/:listing_id/shipping/info
+                               Name            Required  Default   Type
+                    origin_country_id          Y                  int
+                    destination_country_id     N                  int
+    Parameters      primary_cost               Y                  float
+                    secondary_cost             Y                  float
+                    region_id                  N                  int
+                    listing_id                 Y                  int
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+
+getShippingInfo[anchor]
+
+    Method Name     getShippingInfo
+     Synopsis       Retrieves a ShippingInfo by id.
+    HTTP Method     GET
+        URI         /shipping/info/:shipping_info_id
+                           Name         Required  Default      Type
+    Parameters      shipping_info_id    Y                  array(int)
+
+  Requires OAuth    Y
+ Permission Scope   listings_r
+
+updateShippingInfo[anchor]
+
+    Method Name     updateShippingInfo
+     Synopsis       Updates a ShippingInfo with the given id.
+    HTTP Method     PUT
+        URI         /shipping/info/:shipping_info_id
+                               Name            Required  Default   Type
+                    shipping_info_id           Y                  int
+                    origin_country_id          N                  int
+                    destination_country_id     N                  int
+    Parameters      primary_cost               N                  float
+                    secondary_cost             N                  float
+                    region_id                  N                  int
+                    listing_id                 N                  int
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+
+deleteShippingInfo[anchor]
+
+    Method Name     deleteShippingInfo
+     Synopsis       Deletes the ShippingInfo with the given id.
+    HTTP Method     DELETE
+        URI         /shipping/info/:shipping_info_id
+                             Name           Required    Default  Type
+    Parameters      shipping_info_id       Y                     int
+
+  Requires OAuth    Y
+ Permission Scope   listings_w
+

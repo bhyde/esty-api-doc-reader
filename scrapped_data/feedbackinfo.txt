@@ -1,0 +1,21 @@
+
+FeedbackInfo
+
+Overview[anchor]
+
+An array representing the percentage of positive feedback this user has earned. This is returned in the feedback_info field of the User resource.
+
+Fields[anchor]
+
+Field   Visibility Level   Permission Scope  Type            Description
+count  public             none               int  The number of feedbacks.
+score  public             none               int  The feedback score percentage.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+This resource has no methods.
+

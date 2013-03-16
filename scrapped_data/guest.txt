@@ -1,0 +1,53 @@
+
+Guest
+
+Overview[anchor]
+
+A Guest represents an anonymous user that is using the Etsy API that has not yet authenticated, but may wish to store some information before authenticating (currently, guest carts). Guests are identified via a random 13-digit hash, which is unique to every Application. Important: This guest ID is associated directly to your Application, and will not be accessible through other API keys. Although Guests do not require an authenticated user, they do require your app to have production access in order to be interacted with. Please use the sandbox to test your app and apply for production access when you've got an application ready for public use.
+
+Fields[anchor]
+
+   Field     Visibility Level Permission Scope   Type                                                                                                                                            Description
+guest_id     public           none             guest_id The ID that associates to the guest - a random 13-digit hash. Validated by the regular expression '/^[a-zA-Z0-9-_]+$/'. Each ID is identified internally to the Application that created it, meaning that other applications will not have access to this guest, even with the same ID.
+checkout_url public           none             string   The URL to send the user's browser to on checkout. This will allow them to use this guest ID to check out with the carts associated. Please note that a guest cart's data are undefined after being merged on checkout.
+
+Associations[anchor]
+
+This resource has no associations.
+
+Methods[anchor]
+
+getGuest[anchor]
+
+    Method Name     getGuest
+     Synopsis       Get a guest by ID.
+    HTTP Method     GET
+        URI         /guests/:guest_id
+                       Name     Required  Default     Type
+    Parameters      guest_id   Y                   guest_id
+
+  Requires OAuth    N
+ Permission Scope   none
+
+generateGuest[anchor]
+
+  Method Name    generateGuest
+    Synopsis     A helper method that generates a Guest ID to associate to this anonymous session. This method is not strictly necessary, as any sufficiently random guest ID that is 13 characters in length will suffice and automatically create a guest account on use if it does not yet exist.
+  HTTP Method    GET
+      URI        /guests/generator
+   Parameters    none
+ Requires OAuth  N
+Permission Scope none
+
+claimGuest[anchor]
+
+   Method Name    claimGuest
+    Synopsis      Claim this guest to the associated user. Merges the GuestCart's associated with this GuestId into the logged in User's Carts. Returns the number of listings merged in meta['listings_merged'].
+   HTTP Method    POST
+       URI        /guests/:guest_id/claim
+                     Name      Required    Default      Type
+   Parameters     guest_id    Y                      guest_id
+
+ Requires OAuth   Y
+Permission Scope  cart_rw
+

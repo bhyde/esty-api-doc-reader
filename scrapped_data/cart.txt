@@ -1,0 +1,133 @@
+
+Cart
+
+Overview[anchor]
+
+Represents a shopping cart on Etsy. Users have one cart per shop.
+
+Fields[anchor]
+
+          Field            Visibility Level  Permission Scope         Type                                     Description
+cart_id                    private           cart_rw           int                 The numeric ID of the cart
+shop_name                  private           cart_rw           string              The shop name
+message_to_seller          private           cart_rw           string              The message to the seller
+destination_country_id     private           cart_rw           int                 The numeric ID of the destination country
+coupon_code                private           cart_rw           string              The alphanumeric coupon code applied to the cart
+currency_code              private           cart_rw           string              The ISO (alphabetic) code for the currency
+total                      private           cart_rw           string              The total price
+subtotal                   private           cart_rw           string              The subtotal price
+shipping_cost              private           cart_rw           string              The shipping cost
+tax_cost                   private           cart_rw           string              The tax cost
+discount_amount            private           cart_rw           string              The line-item discount amount (does not include tax or shipping)
+shipping_discount_amount   private           cart_rw           string              The shipping discount amount
+tax_discount_amount        private           cart_rw           string              The tax discount amount
+url                        private           cart_rw           string              The full URL to the cart page on Etsy
+listings                   private           cart_rw           array(CartListing)  An array of purchase information for the listings
+
+Associations[anchor]
+
+Association   Visibility Level   Permission Scope       Type                  Description
+Shop         private            cart_rw            Shop            The shop
+Listings     private            cart_rw            array(Listing)  An array of listings
+Coupon       private            cart_rw            Coupon          The coupon applied to the cart
+
+Methods[anchor]
+
+getAllUserCarts[anchor]
+
+    Method Name     getAllUserCarts
+     Synopsis       Get a user's Carts
+    HTTP Method     GET
+        URI         /users/:user_id/carts
+                      Name    Required  Default         Type
+    Parameters      user_id  Y                   user_id_or_name
+
+  Requires OAuth    Y
+ Permission Scope   cart_rw
+
+addToCart[anchor]
+
+   Method Name     addToCart
+     Synopsis      Add a listing to a cart
+   HTTP Method     POST
+       URI         /users/:user_id/carts
+                            Name          Required  Default        Type
+                   user_id                Y                  user_id_or_name
+    Parameters     listing_id             Y                  int
+                   quantity               N         1        int
+                   selected_variations    N                  map(int,int)
+
+  Requires OAuth   Y
+ Permission Scope  cart_rw
+
+updateCartListingQuantity[anchor]
+
+   Method Name     updateCartListingQuantity
+     Synopsis      Update a cart listing purchase quantity
+   HTTP Method     PUT
+       URI         /users/:user_id/carts
+                              Name             Required  Default        Type
+                   user_id                     Y                  user_id_or_name
+    Parameters     listing_id                  Y                  int
+                   quantity                    Y                  int
+                   listing_customization_id    N         0        int
+
+  Requires OAuth   Y
+ Permission Scope  cart_rw
+
+removeCartListing[anchor]
+
+   Method Name     removeCartListing
+     Synopsis      Remove a listing from a cart
+   HTTP Method     DELETE
+       URI         /users/:user_id/carts
+                              Name             Required  Default        Type
+                   user_id                     Y                  user_id_or_name
+    Parameters     listing_id                  Y                  int
+                   listing_customization_id    N         0        int
+
+  Requires OAuth   Y
+ Permission Scope  cart_rw
+
+getUserCart[anchor]
+
+    Method Name     getUserCart
+     Synopsis       Get a cart
+    HTTP Method     GET
+        URI         /users/:user_id/carts/:cart_id
+                      Name    Required  Default         Type
+    Parameters      user_id  Y                   user_id_or_name
+                    cart_id  Y                   cart_id
+
+  Requires OAuth    Y
+ Permission Scope   cart_rw
+
+updateCart[anchor]
+
+   Method Name     updateCart
+     Synopsis      Update a cart
+   HTTP Method     PUT
+       URI         /users/:user_id/carts/:cart_id
+                             Name            Required  Default        Type
+                   user_id                   Y                  user_id_or_name
+                   cart_id                   Y                  cart_id
+    Parameters     destination_country_id    N                  int
+                   message_to_seller         N                  text
+                   coupon_code               N                  string
+
+  Requires OAuth   Y
+ Permission Scope  cart_rw
+
+deleteCart[anchor]
+
+    Method Name     deleteCart
+     Synopsis       Delete a cart
+    HTTP Method     DELETE
+        URI         /users/:user_id/carts/:cart_id
+                      Name    Required  Default         Type
+    Parameters      user_id  Y                   user_id_or_name
+                    cart_id  Y                   cart_id
+
+  Requires OAuth    Y
+ Permission Scope   cart_rw
+
