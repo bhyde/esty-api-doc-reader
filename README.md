@@ -1,7 +1,8 @@
 These two files:
 + api-decl.lisp
 + api-decl.json
-Contain a description of the Esty API.
+
+Contain machine readable descriptions of the Esty API.
 
 The code here can snarf etsy api reference materials and then parse it into something
 suitable for other purposes.
